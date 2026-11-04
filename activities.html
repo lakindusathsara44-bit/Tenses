@@ -15,6 +15,25 @@ header{text-align:center;padding:34px 18px 22px;background:radial-gradient(ellip
 @keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}@keyframes pop{0%{transform:scale(.97);opacity:0}100%{transform:scale(1);opacity:1}}
 @media(max-width:820px){.grid{grid-template-columns:1fr}.side{position:static}.task-list{grid-template-columns:1fr 1fr}.dashboard{grid-template-columns:1fr 1fr}.charts{grid-template-columns:1fr}}@media(max-width:520px){.options{grid-template-columns:1fr}.rubric{grid-template-columns:1fr 1fr}.task-list{grid-template-columns:1fr}.bar-row{grid-template-columns:105px 1fr 35px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+:root{color-scheme:dark;--blue:#a78bfa;--deep:#ddd0ff;--sky:#302447;--pale:#211a30;--ink:#f0eafa;--muted:#b2a7c7;--line:#403453;--green:#6ee7a8}
+body{background:radial-gradient(ellipse at 50% -15%,#382553 0,transparent 48%),linear-gradient(180deg,#100d19,#171223 55%,#100d19);color:var(--ink)}
+header{background:radial-gradient(ellipse at top,#3a2856,transparent 72%)}h1{color:#f4edff}.eyebrow{color:#c4a7ff}
+.metric,.card,.chart{background:linear-gradient(145deg,#211a30,#191525);border-color:#403453;box-shadow:0 14px 38px #0005}
+.metric strong,.card h2,.card h3{color:#d8c5ff}.metric span,.hint,.task-sub{color:#b2a7c7}
+.progress-track,.bar-bg{background:#352b48}.progress-fill,.bar{background:linear-gradient(90deg,#7c3aed,#c084fc,#67e8f9);box-shadow:0 0 14px #a78bfa55}
+.btn{background:linear-gradient(110deg,#7c3aed,#9333ea);box-shadow:0 6px 18px #7c3aed33;transition:transform .2s,filter .2s,box-shadow .2s}.btn:hover{background:linear-gradient(110deg,#8b5cf6,#a855f7);transform:translateY(-2px);box-shadow:0 10px 24px #7c3aed55}.btn.alt{background:#2b2140;color:#e5d8ff;border-color:#57446f}
+.task-link{background:#211a30;color:#e5dcf4;border-color:#352b48;transition:transform .2s,border-color .2s,background .2s}.task-link:hover{transform:translateX(3px);border-color:#8b5cf6}.task-link.active{background:#34264b;border-color:#9b7bce;color:#f1eaff}.task-link small{color:#b2a7c7}
+.pill{background:#382d4c;color:#d6c8ed}.pill.done{background:#123b32;color:#8af0bd}
+.question{background:#211a30;border-color:#403453;box-shadow:0 8px 22px #0003}.qtitle{color:#d9c9ff}
+.option{background:#191525;border-color:#403453;color:#e9e1f5;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s}.option:hover{border-color:#a78bfa;background:#2c2140;box-shadow:0 0 0 2px #a78bfa22}.option.selected{background:#382650;border-color:#b794f6;color:#fff}.option.correct{background:#123b32;border-color:#42c98a;color:#a7f3d0}.option.wrong{background:#45202a;border-color:#e87979;color:#fecaca}
+.result{background:#211c31;border-color:#594478}.rubric div{background:#191525;border-color:#403453}.rubric b{color:#d8c5ff}.empty{background:#211a30;color:#b2a7c7}.bar-row{color:#e4d9f5}
+.skill-graph{margin:12px 0 18px;padding:8px;border:1px solid #403453;border-radius:13px;background:linear-gradient(180deg,#211a30,#191525);overflow:hidden}.skill-graph svg{display:block;width:100%;height:auto}
+.graph-grid{stroke:#403453;stroke-width:1;stroke-dasharray:4 5}.graph-axis-label{fill:#a99dbf;font-size:11px}.graph-line{fill:none;stroke:#c4a7ff;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px #a78bfa99);stroke-dasharray:1200;stroke-dashoffset:1200;animation:drawLine 1.5s ease forwards}.graph-point{fill:#67e8f9;stroke:#211a30;stroke-width:4;transform-box:fill-box;transform-origin:center;animation:pointPop .5s backwards}
+.bar-row{animation:fadeSlide .45s both}.bar{width:0!important;animation:barGrow .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--delay,0ms)}
+.metric,.chart,.card{animation:cardEnter .55s ease both}
+@keyframes drawLine{to{stroke-dashoffset:0}}@keyframes pointPop{0%{opacity:0;transform:scale(.2)}75%{transform:scale(1.35)}100%{opacity:1;transform:scale(1)}}@keyframes barGrow{from{width:0}to{width:var(--value)}}@keyframes fadeSlide{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes cardEnter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.footer{color:#8f84a5}@media(prefers-reduced-motion:reduce){.graph-line,.graph-point,.bar,.bar-row,.metric,.chart,.card{animation:none!important;stroke-dashoffset:0!important}.bar{width:var(--value)!important}}
 </style></head>
 <body>
 <header><div class="wrap"><div class="eyebrow">English Grammar • Practice & Progress</div><h1>Activity & Progress Centre</h1><p class="lead">Complete the activity for each tense, submit your answers, and receive automatic marks, a generated marking rubric, progress tracking and performance graphs.</p><nav class="topnav"><a class="btn alt" href="index.html">← Back to 12 Tenses</a><button class="btn" id="dashboardBtn">My Progress</button></nav></div></header>
@@ -31,7 +50,7 @@ header{text-align:center;padding:34px 18px 22px;background:radial-gradient(ellip
 <section class="card" id="activityCard"><div class="task-head"><div><div class="eyebrow" id="taskLabel">Start here</div><h2 id="taskTitle">Choose your first activity</h2><p class="task-sub" id="taskDesc">There are 12 activity tasks — one for each English tense.</p></div><span class="pill" id="taskScore">Not submitted</span></div><div class="empty" id="emptyState">Select a tense from the activity list. Answer all questions, then press <b>Submit Activity</b> to get your marks and feedback.</div><div id="questions"></div><div class="actions" id="actions" hidden><button class="btn" id="submitBtn">Submit Activity</button><button class="btn alt" id="clearBtn">Clear answers</button></div><div id="result"></div></section>
 <section class="charts" id="progressCharts">
 <div class="chart"><h3>Tense knowledge</h3><p class="hint">Best/latest submitted score for each tense.</p><div class="bars" id="tenseBars"></div></div>
-<div class="chart"><h3>Skill breakdown</h3><p class="hint">Scores grouped by grammar skill across submitted activities.</p><div class="bars" id="skillBars"></div></div>
+<div class="chart"><h3>Skill performance graph</h3><p class="hint">Animated trend across six grammar skills.</p><div id="skillGraph" class="skill-graph" role="img" aria-label="Skill performance line graph"></div><div class="bars" id="skillBars"></div></div>
 </section>
 </main></div>
 <div class="footer">Progress is saved locally in this browser using localStorage. No account or server is connected.</div>
