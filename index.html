@@ -56,6 +56,23 @@ h1{color:#f3edff}
 footer{color:#8e849f}
 .feedback{color:#d7c5ff}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* Refined motion and interactive dark-theme details */
+html{scroll-behavior:smooth}
+.welcome,.tense-panel,.sidebar{animation:panelReveal .55s cubic-bezier(.2,.75,.25,1) both}
+.tense-link,.tab,.btn,.flip,.example,.form-card,.mini{transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease}
+.tense-link:hover{transform:translateX(3px);box-shadow:inset 3px 0 #a78bfa}
+.tab:hover,.flip:hover,.btn:hover{transform:translateY(-2px)}
+.example{animation:cardReveal .45s ease both}
+.example:nth-child(2){animation-delay:.04s}.example:nth-child(3){animation-delay:.08s}.example:nth-child(4){animation-delay:.12s}.example:nth-child(5){animation-delay:.16s}.example:nth-child(6){animation-delay:.2s}
+.form-card:hover,.mini:hover{transform:translateY(-3px);border-color:#8b5cf6;box-shadow:0 12px 28px #0005}
+.structure{box-shadow:inset 3px 0 #a78bfa}
+.passive{box-shadow:0 8px 22px #0004}
+.btn{box-shadow:0 6px 18px #7c3aed33}
+.btn:hover{box-shadow:0 10px 26px #7c3aed66}
+@keyframes panelReveal{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cardReveal{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.welcome,.tense-panel,.sidebar,.example{animation:none!important}}
 </style></head>
 <body>
 <header><div class="wrap"><h1>Master the 12 English Tenses</h1></div></header>
