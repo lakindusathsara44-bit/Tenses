@@ -24,9 +24,41 @@ footer{text-align:center;color:#8192a4;font-size:.82rem;padding:30px 12px}
 @keyframes fadeUp{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}@keyframes flipIn{0%{opacity:0;transform:translateY(-8px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:780px){.layout{grid-template-columns:1fr}.sidebar{position:static;max-height:none}.tense-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.welcome-grid{grid-template-columns:1fr}.forms-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Dark interface refresh */
+:root{color-scheme:dark;--blue:#8b5cf6;--deep:#c4b5fd;--sky:#241d3b;--pale:#171426;--ink:#eeeaf8;--muted:#aaa2bd;--line:#39314f;--white:#171426;--shadow:0 14px 36px #0006}
+body{background:radial-gradient(ellipse at 50% -10%,#30214f 0,transparent 48%),linear-gradient(180deg,#100d1a 0,#151120 55%,#100d1a 100%);color:#eeeaf8}
+header{background:radial-gradient(ellipse at top,#34234f 0,transparent 70%)}
+h1{color:#f3edff}
+.eyebrow{color:#c4a7ff}
+.stat,.search,.sidebar,.welcome,.tense-panel,.example,.form-card,.quiz-options button,.tab{background:#1c1829;color:#eeeaf8;border-color:#39314f}
+.stat{color:#d4c5f5}
+.search{background:#171426}
+.search:focus{border-color:#a78bfa;box-shadow:0 0 0 3px #8b5cf633}
+.btn{background:#7c3aed;color:#fff}.btn:hover{background:#6d28d9}
+.btn.secondary{background:#29213d;color:#ddd0ff;border-color:#4a3b67}
+.tense-link{color:#c9c1d9}.tense-link:hover,.tense-link.active{background:#302447;color:#e6d8ff}
+.num{background:#302447;color:#d5c2ff}
+.welcome h2,.panel-head h2{color:#d8c5ff}
+.mini,.structure,.quiz{background:#211b30;border-color:#403453}
+.mini strong,.structure b,.form-card h4,.section h3{color:#c4a7ff}
+.tag{background:#35264e;color:#e2d2ff}
+.formula,.form-card p,.sentence,.passive p{color:#eeeaf8}
+.tab{color:#c8bddc}.tab.active{background:#7c3aed;border-color:#7c3aed;color:white}
+.example:hover{border-color:#8b5cf6}
+.ex-no{background:#35264e;color:#d8c5ff}
+.meaning,.sinhala,.hint,.passive small{color:#b2a9c5}
+.flip{background:#2b2140;border-color:#594478;color:#ddceff}
+.passive{background:#241d35;border-color:#594478}
+.passive .label{color:#c4a7ff}
+.note{background:#302619;border-color:#66502b;color:#f3d79a}
+.quiz-options button{border-color:#4a3b67;color:#e6ddf5}
+footer{color:#8e849f}
+.feedback{color:#d7c5ff}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style></head>
 <body>
-<header><div class="wrap"><div class="eyebrow">English Grammar • Sinhala Learning Guide</div><h1>Master the 12 English Tenses</h1><p class="lead">Learn each tense step by step with sentence structures, six examples, Sinhala meanings, negative forms, questions, and active-to-passive voice transformations.</p><div class="stats"><span class="stat">12 Tenses</span><span class="stat">72 Examples</span><span class="stat">Sinhala Meanings</span><span class="stat">Interactive Practice</span></div></div></header>
+<header><div class="wrap"><h1>Master the 12 English Tenses</h1></div></header>
 <div class="wrap"><div class="toolbar"><input id="search" class="search" type="search" placeholder="Search a tense or grammar topic…"><button class="btn secondary" id="allBtn">Show all tenses</button><a class="btn" href="activities.html" style="text-decoration:none">✦ Activities & Progress</a></div>
 <div class="layout"><aside class="sidebar"><div class="side-title">Choose a tense</div><nav id="tenseNav" class="tense-nav" aria-label="Tense navigation"></nav></aside>
 <main><section id="welcome" class="welcome"><div class="eyebrow">Start learning</div><h2>How to use this guide</h2><p>Choose one of the 12 tenses. First study its structure, then read the examples and Sinhala meanings. Select an example's <b>Show Passive</b> button to see the matching passive sentence with an animation.</p><div class="welcome-grid"><div class="mini"><strong>01 · Structure</strong><span>Learn the correct word order and helping verbs.</span></div><div class="mini"><strong>02 · Sentence forms</strong><span>Compare affirmative, negative, question and negative-question patterns.</span></div><div class="mini"><strong>03 · Voice & practice</strong><span>Explore active/passive voice and test your understanding.</span></div></div><div class="note">Grammar note: Passive voice is not natural or commonly used with every tense. The guide shows standard passive patterns where they are grammatically possible and marks rare forms clearly.</div></section>
