@@ -88,6 +88,22 @@ button,.btn,.option,.task-link{min-height:42px;max-width:100%;white-space:normal
 <p class="lead">Complete the activity for each tense, submit your answers, and receive automatic marks, a generated marking rubric, progress tracking and performance graphs.</p>
 <div class="loader-progress" aria-hidden="true"><span></span></div>
 </div></div>
+<!-- Independent loader failsafe: the workspace must remain reachable even if app startup encounters a stored-data error. -->
+<script>
+(function(){
+  var screen=document.getElementById("loaderScreen");
+  if(!screen)return;
+  var dismissed=false;
+  function dismiss(){
+    if(dismissed)return;
+    dismissed=true;
+    screen.classList.add("is-hidden");
+    screen.setAttribute("aria-hidden","true");
+  }
+  window.addEventListener("load",function(){setTimeout(dismiss,350)},{once:true});
+  setTimeout(dismiss,2500);
+})();
+</script>
 <header><div class="wrap"><nav class="topnav"><a class="btn alt" href="index.html">← Back to 12 Tenses</a><button class="btn secondary theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="theme-dot" aria-hidden="true"></span><span class="theme-label">Dark theme</span></button><button class="btn" id="dashboardBtn">My Progress</button></nav></div></header>
 <div class="wrap">
 <section class="dashboard" aria-label="Learning statistics">
@@ -123,8 +139,8 @@ const DATA = [
 {name:"Future Perfect Continuous",si:"අනාගත පූර්ණ සන්තතික කාලය",a:"Subject + will + have + been + V-ing",neg:"Subject + will + not + have + been + V-ing",q:"Will + Subject + have + been + V-ing?",use:"Duration continuing up to a future point",active:"She will have been working here for five years.",passive:"No natural standard passive is normally used.",v:false}
 ];
 const STORE="tensesActivityProgressV1";let saved=load(),selected=0,answers={},submitted=false;
-function load(){try{return JSON.parse(localStorage.getItem(STORE)||"{}")}catch(e){return {}}}
-function persist(){localStorage.setItem(STORE,JSON.stringify(saved))}
+function load(){try{const data=JSON.parse(localStorage.getItem(STORE)||"{}");if(!data||typeof data!=="object"||Array.isArray(data))return {};return Object.fromEntries(Object.entries(data).filter(([k,v])=>/^(?:[0-9]|1[01])$/.test(k)&&v&&typeof v==="object"&&Number.isFinite(Number(v.score))).map(([k,v])=>[k,{score:Math.max(0,Math.min(100,Number(v.score))),correct:Number(v.correct)||0,grade:typeof v.grade==="string"?v.grade:"",skills:v.skills&&typeof v.skills==="object"?v.skills:{}}]))}catch(e){return {}}}
+function persist(){try{localStorage.setItem(STORE,JSON.stringify(saved))}catch(e){document.getElementById("result").textContent="Progress could not be saved in this browser. Check storage permissions or available space."}}
 function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
 function makeQuestions(t,i){
 const distractA=DATA.filter(x=>x.a!==t.a).map(x=>x.a),distrN=DATA.filter(x=>x.neg!==t.neg).map(x=>x.neg),distrQ=DATA.filter(x=>x.q!==t.q).map(x=>x.q);
