@@ -101,8 +101,8 @@ button,.btn,.option,.task-link{min-height:42px;max-width:100%;white-space:normal
 <main>
 <section class="card" id="activityCard"><div class="task-head"><div><div class="eyebrow" id="taskLabel">Start here</div><h2 id="taskTitle">Choose your first activity</h2><p class="task-sub" id="taskDesc">There are 12 activity tasks — one for each English tense.</p></div><span class="pill" id="taskScore">Not submitted</span></div><div class="empty" id="emptyState">Select a tense from the activity list. Answer all questions, then press <b>Submit Activity</b> to get your marks and feedback.</div><div id="questions"></div><div class="actions" id="actions" hidden><button class="btn" id="submitBtn">Submit Activity</button><button class="btn alt" id="clearBtn">Clear answers</button></div><div id="result"></div></section>
 <section class="charts" id="progressCharts">
-<div class="chart"><h3>Tense knowledge</h3><p class="hint">Best/latest submitted score for each tense.</p><div class="bars" id="tenseBars"></div></div>
-<div class="chart"><h3>Skill breakdown</h3><p class="hint">Scores grouped by grammar skill across submitted activities.</p><div class="bars" id="skillBars"></div></div>
+<div class="chart"><h3>Tense knowledge</h3><p class="hint">Best/latest submitted score for each tense.</p><div class="bars pie-layout" id="tensePie"></div></div>
+<div class="chart"><h3>Skill breakdown</h3><p class="hint">Scores grouped by grammar skill across submitted activities.</p><div class="bars pie-layout" id="skillPie"></div></div>
 </section>
 </main></div>
 <div class="footer">Progress is saved locally in this browser using localStorage. No account or server is connected.</div>
@@ -123,8 +123,8 @@ const DATA = [
 {name:"Future Perfect Continuous",si:"අනාගත පූර්ණ සන්තතික කාලය",a:"Subject + will + have + been + V-ing",neg:"Subject + will + not + have + been + V-ing",q:"Will + Subject + have + been + V-ing?",use:"Duration continuing up to a future point",active:"She will have been working here for five years.",passive:"No natural standard passive is normally used.",v:false}
 ];
 const STORE="tensesActivityProgressV1";let saved=load(),selected=0,answers={},submitted=false;
-function load(){try{return JSON.parse(localStorage.getItem(STORE)||"{}")}catch(e){return {}}}
-function persist(){localStorage.setItem(STORE,JSON.stringify(saved))}
+function load(){try{const value=JSON.parse(localStorage.getItem(STORE)||"{}");return value&&typeof value==="object"&&!Array.isArray(value)?value:{}}catch(e){return {}}}
+function persist(){try{localStorage.setItem(STORE,JSON.stringify(saved))}catch(e){console.warn("Progress could not be saved in this browser",e)}}
 function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
 function makeQuestions(t,i){
 const distractA=DATA.filter(x=>x.a!==t.a).map(x=>x.a),distrN=DATA.filter(x=>x.neg!==t.neg).map(x=>x.neg),distrQ=DATA.filter(x=>x.q!==t.q).map(x=>x.q);
@@ -157,7 +157,7 @@ const skillData=skills.map(k=>{const arr=vals.map(v=>v.skills?.[k]).filter(v=>ty
 renderPie("skillPie",skillData,"Submit activities to see skill performance");
 }
 function renderPie(id,items,emptyText){
-const root=document.getElementById(id);root.innerHTML="";
+const root=document.getElementById(id);if(!root)return;root.innerHTML="";
 if(!items.length){const p=document.createElement("p");p.className="hint";p.textContent=emptyText;root.append(p);return}
 const total=items.reduce((s,x)=>s+x.value,0),stops=[];let angle=0;
 items.forEach((item,i)=>{const next=angle+(item.value/total*360);stops.push("var(--pie"+(i%10)+") "+angle+"deg "+next+"deg");angle=next});
