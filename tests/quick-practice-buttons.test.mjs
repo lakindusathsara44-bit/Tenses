@@ -15,6 +15,7 @@ function createElement() {
     disabled: false,
     children: [],
     onclick: null,
+    style: {},
     _innerHTML: "",
     set innerHTML(value) { this._innerHTML = value; this.children = []; },
     get innerHTML() { return this._innerHTML; },
@@ -32,9 +33,11 @@ function createQuiz() {
   }};
   const context = {
     tenses: [{ a: "Affirmative", neg: "Negative", q: "Question", nq: "Negative question" }],
+    current: 0,
+    document: { createElement: createElement },
     Math: Object.assign(Object.create(Math), { random: () => 0 })
   };
-  vm.runInNewContext(quizSource + "\\nglobalThis.makeQuiz = makeQuiz;", context);
+  vm.runInNewContext(quizSource + "\nglobalThis.makeQuiz = makeQuiz;", context);
   context.makeQuiz(root);
   return { question, options, feedback, next };
 }
