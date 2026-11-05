@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#1769c2"><title>English Tenses — Learn All 12 Tenses</title>
+<script>try{if(localStorage.getItem("tensesThemeV1")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
 <style>
 :root{--blue:#1769c2;--deep:#104b91;--sky:#eaf5ff;--pale:#f5faff;--ink:#18324d;--muted:#61758b;--line:#d7e8f8;--white:#fff;--shadow:0 12px 32px #164d8012}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eaf5ff 0,#f7fbff 360px,#fff 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);line-height:1.6}
@@ -24,10 +25,37 @@ footer{text-align:center;color:#8192a4;font-size:.82rem;padding:30px 12px}
 @keyframes fadeUp{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}@keyframes flipIn{0%{opacity:0;transform:translateY(-8px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:780px){.layout{grid-template-columns:1fr}.sidebar{position:static;max-height:none}.tense-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.welcome-grid{grid-template-columns:1fr}.forms-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Blue / light-blue / dark-blue theme */
+html[data-theme="dark"]{color-scheme:dark;--blue:#55aaff;--deep:#9bcfff;--sky:#123b63;--pale:#102b49;--ink:#e4f2ff;--muted:#a8c2dc;--line:#244d73;--white:#0b1d32;--shadow:0 12px 32px #0008}
+html[data-theme="dark"] body{background:linear-gradient(180deg,#07182b 0,#0b2038 360px,#081729 100%);color:var(--ink)}
+html[data-theme="dark"] header{background:radial-gradient(ellipse at top,#123b63 0,transparent 70%)}
+html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3,html[data-theme="dark"] h4{color:#b9dcff}
+html[data-theme="dark"] .lead,html[data-theme="dark"] .hint,html[data-theme="dark"] .meaning,html[data-theme="dark"] .sinhala,html[data-theme="dark"] footer{color:#a8c2dc}
+html[data-theme="dark"] .stat,html[data-theme="dark"] .sidebar,html[data-theme="dark"] .welcome,html[data-theme="dark"] .tense-panel,html[data-theme="dark"] .metric,html[data-theme="dark"] .card,html[data-theme="dark"] .chart,html[data-theme="dark"] .example,html[data-theme="dark"] .rubric div{background:#0e2742;color:#e4f2ff;border-color:#244d73}
+html[data-theme="dark"] .search,html[data-theme="dark"] .tab,html[data-theme="dark"] .quiz-options button,html[data-theme="dark"] .option,html[data-theme="dark"] .task-link{background:#102f50;color:#dceeff;border-color:#28577f}
+html[data-theme="dark"] .search::placeholder{color:#8eacc8}
+html[data-theme="dark"] .tense-link{color:#c5e2ff}
+html[data-theme="dark"] .tense-link:hover,html[data-theme="dark"] .tense-link.active,html[data-theme="dark"] .task-link.active{background:#17466f;color:#fff}
+html[data-theme="dark"] .num,html[data-theme="dark"] .tag,html[data-theme="dark"] .ex-no,html[data-theme="dark"] .pill{background:#17466f;color:#b9dcff;border-color:#326a98}
+html[data-theme="dark"] .structure,html[data-theme="dark"] .form-card,html[data-theme="dark"] .quiz,html[data-theme="dark"] .passive,html[data-theme="dark"] .result,html[data-theme="dark"] .empty{background:#102d4b;color:#e4f2ff;border-color:#28577f}
+html[data-theme="dark"] .formula,html[data-theme="dark"] .sentence,html[data-theme="dark"] .form-card p,html[data-theme="dark"] .form-card b,html[data-theme="dark"] .passive p,html[data-theme="dark"] .qtitle{color:#d8ecff}
+html[data-theme="dark"] .flip,html[data-theme="dark"] .btn.secondary{background:#153e64;color:#c8e5ff;border-color:#326a98}
+html[data-theme="dark"] .flip:hover,html[data-theme="dark"] .btn.secondary:hover{background:#1c5688}
+html[data-theme="dark"] .note{background:#1b3550;color:#d7eaff;border-color:#355d82}
+html[data-theme="dark"] .option.selected{background:#17466f;border-color:#55aaff}
+html[data-theme="dark"] .option.correct{background:#123e3a;border-color:#43b99b}
+html[data-theme="dark"] .option.wrong{background:#492b3a;border-color:#d7799c}
+html[data-theme="dark"] .progress-track,html[data-theme="dark"] .bar-bg{background:#1b3a59}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap}
+.theme-toggle .theme-dot{width:9px;height:9px;border-radius:50%;background:#9bdcff;box-shadow:0 0 10px #55aaff}
+html[data-theme="dark"] .theme-toggle .theme-dot{background:#17466f;box-shadow:0 0 0 2px #9bdcff}
+@media(prefers-reduced-motion:no-preference){.theme-toggle{transition:background .2s,color .2s,transform .2s}.theme-toggle:active{transform:scale(.97)}}
+
 </style></head>
 <body>
 <header><div class="wrap"><div class="eyebrow">English Grammar • Sinhala Learning Guide</div><h1>Master the 12 English Tenses</h1><p class="lead">Learn each tense step by step with sentence structures, six examples, Sinhala meanings, negative forms, questions, and active-to-passive voice transformations.</p><div class="stats"><span class="stat">12 Tenses</span><span class="stat">72 Examples</span><span class="stat">Sinhala Meanings</span><span class="stat">Interactive Practice</span></div></div></header>
-<div class="wrap"><div class="toolbar"><input id="search" class="search" type="search" placeholder="Search a tense or grammar topic…"><button class="btn secondary" id="allBtn">Show all tenses</button><a class="btn" href="activities.html" style="text-decoration:none">✦ Activities & Progress</a></div>
+<div class="wrap"><div class="toolbar"><input id="search" class="search" type="search" placeholder="Search a tense or grammar topic…"><button class="btn secondary" id="allBtn">Show all tenses</button><button class="btn secondary theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="theme-dot" aria-hidden="true"></span><span class="theme-label">Dark theme</span></button><a class="btn" href="activities.html" style="text-decoration:none">✦ Activities & Progress</a></div>
 <div class="layout"><aside class="sidebar"><div class="side-title">Choose a tense</div><nav id="tenseNav" class="tense-nav" aria-label="Tense navigation"></nav></aside>
 <main><section id="welcome" class="welcome"><div class="eyebrow">Start learning</div><h2>How to use this guide</h2><p>Choose one of the 12 tenses. First study its structure, then read the examples and Sinhala meanings. Select an example's <b>Show Passive</b> button to see the matching passive sentence with an animation.</p><div class="welcome-grid"><div class="mini"><strong>01 · Structure</strong><span>Learn the correct word order and helping verbs.</span></div><div class="mini"><strong>02 · Sentence forms</strong><span>Compare affirmative, negative, question and negative-question patterns.</span></div><div class="mini"><strong>03 · Voice & practice</strong><span>Explore active/passive voice and test your understanding.</span></div></div><div class="note">Grammar note: Passive voice is not natural or commonly used with every tense. The guide shows standard passive patterns where they are grammatically possible and marks rare forms clearly.</div></section>
 <section id="tensePanel" class="tense-panel hidden"><div class="panel-head"><div><div class="eyebrow" id="groupLabel"></div><h2 id="tenseTitle"></h2><p class="sinhala" id="tenseSi"></p></div><span class="tag" id="tenseTag"></span></div><div class="structure"><b>Affirmative structure</b><div class="formula" id="affirmative"></div></div><div class="structure"><b>Use / භාවිතය</b><div id="usage"></div></div>
@@ -130,4 +158,28 @@ content.append(section)}
 function makeQuiz(root){const t=tenses[current],q=root.querySelector('#question'),opts=root.querySelector('#options'),fb=root.querySelector('#feedback');const all=[t.a,t.neg,t.q,t.nq];const labels=['Affirmative','Negative','Question','Negative question'];let correct=0;function next(){correct=Math.floor(Math.random()*4);q.textContent='Which structure is used for: '+labels[correct]+'?';opts.innerHTML='';[...all].sort(()=>Math.random()-.5).forEach(x=>{const b=document.createElement('button');b.textContent=x;b.onclick=()=>{fb.textContent=x===all[correct]?'✓ Correct! Well done.':'Not quite. Review the structure and try again.';fb.style.color=x===all[correct]?'#16834a':'#b45309';[...opts.children].forEach(k=>k.disabled=true)};opts.append(b)});fb.textContent=''}root.querySelector('#next').onclick=next;next()}
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.tab;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));renderTab()}));
 document.getElementById('search').addEventListener('input',e=>renderNav(e.target.value));document.getElementById('allBtn').onclick=()=>{document.getElementById('search').value='';renderNav();welcome.classList.remove('hidden');panel.classList.add('hidden')};renderNav();
+
+// Shared light/dark theme preference across both learning pages.
+(function(){
+  const key="tensesThemeV1";
+  const button=document.getElementById("themeToggle");
+  function applyTheme(theme){
+    document.documentElement.dataset.theme=theme;
+    try{localStorage.setItem(key,theme)}catch(e){}
+    const dark=theme==="dark";
+    if(button){
+      button.setAttribute("aria-pressed",String(dark));
+      button.setAttribute("aria-label",dark?"Switch to light theme":"Switch to dark theme");
+      const label=button.querySelector(".theme-label");
+      if(label)label.textContent=dark?"Light theme":"Dark theme";
+    }
+    const meta=document.querySelector('meta[name="theme-color"]');
+    if(meta)meta.setAttribute("content",dark?"#081729":"#1769c2");
+  }
+  let current="light";
+  try{current=localStorage.getItem(key)==="dark"?"dark":"light"}catch(e){}
+  applyTheme(current);
+  if(button)button.addEventListener("click",()=>applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+})();
+
 </script></body></html>
