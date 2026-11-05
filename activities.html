@@ -4,6 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#1769c2">
 <title>Grammar Activity Centre | English Tenses</title>
+<script>try{if(localStorage.getItem("tensesThemeV1")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
 <style>
 :root{--blue:#1769c2;--deep:#104b91;--sky:#eaf5ff;--pale:#f5faff;--ink:#18324d;--muted:#61758b;--line:#d7e8f8;--green:#16834a;--amber:#b7791f;--red:#c24141}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eaf5ff 0,#f8fbff 330px,#fff 100%);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);line-height:1.6}a{color:var(--blue);text-decoration:none}.wrap{max-width:1160px;margin:auto;padding:0 18px}
@@ -36,6 +37,33 @@ header{text-align:center;padding:34px 18px 22px;background:radial-gradient(ellip
 @media(prefers-reduced-motion:reduce){.atom-orbit,.loader-progress span{animation:none}.loader-screen{transition:none}}
 @media(max-width:820px){.grid{grid-template-columns:1fr}.side{position:static}.task-list{grid-template-columns:1fr 1fr}.dashboard{grid-template-columns:1fr 1fr}.charts{grid-template-columns:1fr}}@media(max-width:520px){.options{grid-template-columns:1fr}.rubric{grid-template-columns:1fr 1fr}.task-list{grid-template-columns:1fr}.bar-row{grid-template-columns:105px 1fr 35px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Blue / light-blue / dark-blue theme */
+html[data-theme="dark"]{color-scheme:dark;--blue:#55aaff;--deep:#9bcfff;--sky:#123b63;--pale:#102b49;--ink:#e4f2ff;--muted:#a8c2dc;--line:#244d73;--white:#0b1d32;--shadow:0 12px 32px #0008}
+html[data-theme="dark"] body{background:linear-gradient(180deg,#07182b 0,#0b2038 360px,#081729 100%);color:var(--ink)}
+html[data-theme="dark"] header{background:radial-gradient(ellipse at top,#123b63 0,transparent 70%)}
+html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3,html[data-theme="dark"] h4{color:#b9dcff}
+html[data-theme="dark"] .lead,html[data-theme="dark"] .hint,html[data-theme="dark"] .meaning,html[data-theme="dark"] .sinhala,html[data-theme="dark"] footer{color:#a8c2dc}
+html[data-theme="dark"] .stat,html[data-theme="dark"] .sidebar,html[data-theme="dark"] .welcome,html[data-theme="dark"] .tense-panel,html[data-theme="dark"] .metric,html[data-theme="dark"] .card,html[data-theme="dark"] .chart,html[data-theme="dark"] .example,html[data-theme="dark"] .rubric div{background:#0e2742;color:#e4f2ff;border-color:#244d73}
+html[data-theme="dark"] .search,html[data-theme="dark"] .tab,html[data-theme="dark"] .quiz-options button,html[data-theme="dark"] .option,html[data-theme="dark"] .task-link{background:#102f50;color:#dceeff;border-color:#28577f}
+html[data-theme="dark"] .search::placeholder{color:#8eacc8}
+html[data-theme="dark"] .tense-link{color:#c5e2ff}
+html[data-theme="dark"] .tense-link:hover,html[data-theme="dark"] .tense-link.active,html[data-theme="dark"] .task-link.active{background:#17466f;color:#fff}
+html[data-theme="dark"] .num,html[data-theme="dark"] .tag,html[data-theme="dark"] .ex-no,html[data-theme="dark"] .pill{background:#17466f;color:#b9dcff;border-color:#326a98}
+html[data-theme="dark"] .structure,html[data-theme="dark"] .form-card,html[data-theme="dark"] .quiz,html[data-theme="dark"] .passive,html[data-theme="dark"] .result,html[data-theme="dark"] .empty{background:#102d4b;color:#e4f2ff;border-color:#28577f}
+html[data-theme="dark"] .formula,html[data-theme="dark"] .sentence,html[data-theme="dark"] .form-card p,html[data-theme="dark"] .form-card b,html[data-theme="dark"] .passive p,html[data-theme="dark"] .qtitle{color:#d8ecff}
+html[data-theme="dark"] .flip,html[data-theme="dark"] .btn.secondary{background:#153e64;color:#c8e5ff;border-color:#326a98}
+html[data-theme="dark"] .flip:hover,html[data-theme="dark"] .btn.secondary:hover{background:#1c5688}
+html[data-theme="dark"] .note{background:#1b3550;color:#d7eaff;border-color:#355d82}
+html[data-theme="dark"] .option.selected{background:#17466f;border-color:#55aaff}
+html[data-theme="dark"] .option.correct{background:#123e3a;border-color:#43b99b}
+html[data-theme="dark"] .option.wrong{background:#492b3a;border-color:#d7799c}
+html[data-theme="dark"] .progress-track,html[data-theme="dark"] .bar-bg{background:#1b3a59}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap}
+.theme-toggle .theme-dot{width:9px;height:9px;border-radius:50%;background:#9bdcff;box-shadow:0 0 10px #55aaff}
+html[data-theme="dark"] .theme-toggle .theme-dot{background:#17466f;box-shadow:0 0 0 2px #9bdcff}
+@media(prefers-reduced-motion:no-preference){.theme-toggle{transition:background .2s,color .2s,transform .2s}.theme-toggle:active{transform:scale(.97)}}
+
 </style></head>
 <body>
 <div class="loader-screen" id="loaderScreen" role="status" aria-live="polite" aria-label="Loading English Grammar Activity and Progress Centre">
@@ -46,7 +74,7 @@ header{text-align:center;padding:34px 18px 22px;background:radial-gradient(ellip
 <p class="lead">Complete the activity for each tense, submit your answers, and receive automatic marks, a generated marking rubric, progress tracking and performance graphs.</p>
 <div class="loader-progress" aria-hidden="true"><span></span></div>
 </div></div>
-<header><div class="wrap"><nav class="topnav"><a class="btn alt" href="index.html">← Back to 12 Tenses</a><button class="btn" id="dashboardBtn">My Progress</button></nav></div></header>
+<header><div class="wrap"><nav class="topnav"><a class="btn alt" href="index.html">← Back to 12 Tenses</a><button class="btn secondary theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="theme-dot" aria-hidden="true"></span><span class="theme-label">Dark theme</span></button><button class="btn" id="dashboardBtn">My Progress</button></nav></div></header>
 <div class="wrap">
 <section class="dashboard" aria-label="Learning statistics">
 <div class="metric"><span>Activities completed</span><strong id="completed">0 / 12</strong><div class="progress-track"><div class="progress-fill" id="overallFill"></div></div></div>
@@ -106,5 +134,29 @@ const loader=document.getElementById("loaderScreen");
 const hideLoader=()=>{if(loader)loader.classList.add("is-hidden")};
 window.addEventListener("load",()=>setTimeout(hideLoader,2200),{once:true});
 setTimeout(hideLoader,4200);
+
+// Shared light/dark theme preference across both learning pages.
+(function(){
+  const key="tensesThemeV1";
+  const button=document.getElementById("themeToggle");
+  function applyTheme(theme){
+    document.documentElement.dataset.theme=theme;
+    try{localStorage.setItem(key,theme)}catch(e){}
+    const dark=theme==="dark";
+    if(button){
+      button.setAttribute("aria-pressed",String(dark));
+      button.setAttribute("aria-label",dark?"Switch to light theme":"Switch to dark theme");
+      const label=button.querySelector(".theme-label");
+      if(label)label.textContent=dark?"Light theme":"Dark theme";
+    }
+    const meta=document.querySelector('meta[name="theme-color"]');
+    if(meta)meta.setAttribute("content",dark?"#081729":"#1769c2");
+  }
+  let current="light";
+  try{current=localStorage.getItem(key)==="dark"?"dark":"light"}catch(e){}
+  applyTheme(current);
+  if(button)button.addEventListener("click",()=>applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+})();
+
 </script>
 </body></html>
