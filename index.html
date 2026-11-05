@@ -164,6 +164,8 @@ content.append(section)}
 function makeQuiz(root){const t=tenses[current],q=root.querySelector('#question'),opts=root.querySelector('#options'),fb=root.querySelector('#feedback');const all=[t.a,t.neg,t.q,t.nq];const labels=['Affirmative','Negative','Question','Negative question'];let correct=0;function next(){correct=Math.floor(Math.random()*4);q.textContent='Which structure is used for: '+labels[correct]+'?';opts.innerHTML='';[...all].sort(()=>Math.random()-.5).forEach(x=>{const b=document.createElement('button');b.textContent=x;b.onclick=()=>{fb.textContent=x===all[correct]?'✓ Correct! Well done.':'Not quite. Review the structure and try again.';fb.style.color=x===all[correct]?'#16834a':'#b45309';[...opts.children].forEach(k=>k.disabled=true)};opts.append(b)});fb.textContent=''}root.querySelector('#next').onclick=next;next()}
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.tab;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));renderTab()}));
 document.getElementById('search').addEventListener('input',e=>renderNav(e.target.value));document.getElementById('allBtn').onclick=()=>{document.getElementById('search').value='';renderNav();welcome.classList.remove('hidden');panel.classList.add('hidden')};renderNav();
+// Open the first lesson immediately when the main website link is opened.
+showTense(0);
 
 // Shared light/dark theme preference across both learning pages.
 (function(){
