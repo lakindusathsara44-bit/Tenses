@@ -121,7 +121,7 @@ html[data-theme="dark"] .translation-answer{background:#123b63;color:#d8ecff}
   setTimeout(dismiss,2500);
 })();
 </script>
-<header><div class="wrap"><nav class="topnav"><a class="btn alt" href="index.html">← Back to 12 Tenses</a><button class="btn secondary theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="theme-dot" aria-hidden="true"></span><span class="theme-label">Dark theme</span></button><button class="btn" id="dashboardBtn">My Progress</button></nav></div></header>
+<header><div class="wrap"><nav class="topnav"><a class="btn alt" href="index.html">← Back to 12 Tenses</a><button class="btn" id="dashboardBtn">My Progress</button></nav></div></header>
 <div class="wrap">
 <section class="dashboard" aria-label="Learning statistics">
 <div class="metric"><span>Activities completed</span><strong id="completed">0 / 12</strong><div class="progress-track"><div class="progress-fill" id="overallFill"></div></div></div>
@@ -130,7 +130,7 @@ html[data-theme="dark"] .translation-answer{background:#123b63;color:#d8ecff}
 <div class="metric"><span>Learning status</span><strong id="status">New</strong><span id="statusText">Your progress updates after submission</span></div>
 </section>
 <div class="grid">
-<aside class="card side"><div class="eyebrow">12 activity tasks</div><h2>Choose a Tense</h2><p class="hint">Each tense has its own activity. Submit to save your score on this device.</p><div id="taskList" class="task-list"></div><button class="btn alt" id="resetBtn" style="width:100%;margin-top:14px">Reset saved progress</button></aside>
+<aside class="card side"><div class="eyebrow">12 activity tasks</div><h2>Choose a Tense</h2><p class="hint">Each tense has its own activity. Submit to save your score on this device.</p><div id="taskList" class="task-list"></div><div class="settings-heading side-title">Settings</div><div class="settings-panel" aria-label="Appearance settings"><p>Appearance</p><button class="btn secondary theme-toggle" id="themeToggle" type="button" aria-pressed="false"><span class="theme-dot" aria-hidden="true"></span><span class="theme-label">Dark theme</span></button></div><button class="btn alt" id="resetBtn" style="width:100%;margin-top:14px">Reset saved progress</button></aside>
 <main>
 <section class="card" id="activityCard"><div class="task-head"><div><div class="eyebrow" id="taskLabel">Start here</div><h2 id="taskTitle">Choose your first activity</h2><p class="task-sub" id="taskDesc">There are 12 activity tasks — one for each English tense.</p></div><span class="pill" id="taskScore">Not submitted</span></div><div class="empty" id="emptyState">Select a tense from the activity list. Answer all questions, then press <b>Submit Activity</b> to get your marks and feedback.</div><div id="questions"></div><section class="translation-panel" id="translationPanel" hidden><h3>Sinhala → English Translation Practice</h3><p class="translation-intro">Translate each Sinhala sentence into English. Write your answer first, then reveal the suggested translation. Other grammatically correct answers may also be accepted.</p><div class="translation-list" id="translationList"></div></section><div class="actions" id="actions" hidden><button class="btn" id="submitBtn">Submit Activity</button><button class="btn alt" id="clearBtn">Clear answers</button></div><div id="result"></div></section>
 <section class="charts" id="progressCharts">
