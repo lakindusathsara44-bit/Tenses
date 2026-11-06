@@ -37,9 +37,27 @@ function card(plant){const button=document.createElement("button");button.classN
 async function render(){const version=++renderVersion;grid.replaceChildren();const q=search.value.trim().toLowerCase();const list=plants.filter(p=>[p.name,p.sci,p.common,p.family,p.habitat].join(" ").toLowerCase().includes(q));const count=document.getElementById("plantCount");count.textContent=q?list.length+" of "+plants.length+" plants":"Showing "+plants.length+" plants";if(!list.length){const empty=document.createElement("div");empty.className="empty";empty.textContent="No matching plants found. Try another search.";grid.append(empty);return;}const cards=list.map(card);const results=await Promise.all(cards.map(async entry=>({entry,hasImage:await entry.photoPromise})));if(version!==renderVersion)return;results.sort((a,b)=>Number(b.hasImage)-Number(a.hasImage));results.forEach(({entry})=>grid.append(entry.button));}
 function put(id,value){document.getElementById(id).textContent=value||"Information is not currently available.";}
 function openProfile(p){current=p;put("family",p.family);put("plantName",p.name);put("scientific",p.sci);put("habitat",p.habitat);put("diet",p.diet);put("lifespan",p.lifespan);put("nutritionHabitat",p.diet+" "+p.habitat);fields.forEach(k=>put(k,p[k]));const gallery=document.getElementById("gallery");gallery.replaceChildren();const photo=document.createElement("figure");photo.className="photo-card";photo.textContent="Loading plant photographs…";gallery.append(photo);loadPhoto(p,photo);const sourceBox=document.getElementById("sources");sourceBox.replaceChildren();(p.sources||[]).forEach(([label,url])=>{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent=label+" ↗";sourceBox.append(a);});detail.classList.add("show");detail.scrollIntoView({behavior:"smooth",block:"start"});history.replaceState(null,"","#"+encodeURIComponent(p.id));}
-function closeProfile(){detail.classList.remove("show");current=null;history.replaceState(null,"",location.pathname);}
+function closeProfile(){stopTreeSpeech();detail.classList.remove("show");current=null;history.replaceState(null,"",location.pathname);}
 document.getElementById("closeDetail").addEventListener("click",closeProfile);search.addEventListener("input",render);
-document.getElementById("readAloud").addEventListener("click",()=>{if(!current){document.getElementById("photoStatus").textContent="Open a plant profile before using Read profile aloud.";return;}if(!("speechSynthesis"in window)||!("SpeechSynthesisUtterance"in window)){document.getElementById("photoStatus").textContent="Text-to-speech is not supported by this browser.";return;}window.speechSynthesis.cancel();const text=[current.name,current.sci,current.description,...fields.map(k=>current[k])].filter(Boolean).join(". ");const utterance=new SpeechSynthesisUtterance(text);utterance.lang="en-US";utterance.rate=.95;utterance.onerror=()=>{document.getElementById("photoStatus").textContent="Could not read this profile. Check your device text-to-speech settings.";};window.speechSynthesis.speak(utterance);document.getElementById("photoStatus").textContent="Reading plant profile aloud…";});
-document.getElementById("stopReading").addEventListener("click",()=>{if("speechSynthesis"in window)window.speechSynthesis.cancel();});
+function stopTreeSpeech(){
+  if("speechSynthesis" in window)window.speechSynthesis.cancel();
+  document.getElementById("photoStatus").textContent="Speech stopped.";
+}
+document.getElementById("readAloud").addEventListener("click",()=>{
+  if(!current){document.getElementById("photoStatus").textContent="Open a plant profile before using Read profile aloud.";return;}
+  if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){
+    document.getElementById("photoStatus").textContent="Text-to-speech is not supported by this browser or device.";return;
+  }
+  window.speechSynthesis.cancel();
+  const text=[current.name,current.sci,current.description,...fields.map(k=>current[k])].filter(Boolean).join(". ");
+  const utterance=new SpeechSynthesisUtterance(text);
+  utterance.lang="en-US";utterance.rate=.95;
+  utterance.onend=()=>{document.getElementById("photoStatus").textContent="Finished reading this plant profile.";};
+  utterance.onerror=()=>{document.getElementById("photoStatus").textContent="Speech playback failed. Check your device text-to-speech settings.";};
+  document.getElementById("photoStatus").textContent="Reading plant profile aloud…";
+  window.speechSynthesis.speak(utterance);
+});
+document.getElementById("stopReading").addEventListener("click",stopTreeSpeech);
+
 render();if(location.hash){const wanted=decodeURIComponent(location.hash.slice(1));const match=plants.find(p=>p.id===wanted);if(match)openProfile(match);}
 </script></body></html>
