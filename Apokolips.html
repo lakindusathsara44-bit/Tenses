@@ -10,14 +10,47 @@
 .wrap{width:min(1080px,calc(100% - 32px));margin:auto}header{padding:24px 0;border-bottom:1px solid var(--line)}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.brand,.eyebrow{color:var(--blue);font-weight:850;letter-spacing:.13em}.back,.pack-link{color:var(--blue);text-decoration:none;border:1px solid var(--line);border-radius:11px;padding:9px 13px}
 .hero{padding:clamp(42px,8vw,88px) 0 28px}.hero h1{font-size:clamp(2.5rem,7vw,5rem);line-height:1.02;letter-spacing:-.04em;margin:10px 0}.hero p{max-width:700px;color:var(--muted);font-size:1.08rem}
 .packs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:24px 0 70px}.pack{display:flex;flex-direction:column;min-height:290px;padding:clamp(20px,4vw,32px);background:linear-gradient(145deg,#151e28,#0e141b);border:1px solid var(--line);border-radius:20px;transition:.22s}.pack:hover{transform:translateY(-5px);border-color:#5799c4;box-shadow:0 16px 35px #0007}.symbol{font-size:2.8rem}.pack h2{font-size:clamp(1.6rem,3vw,2.2rem);margin:10px 0 3px}.pack p{color:var(--muted);margin:0 0 18px}.count{color:var(--blue);font-size:.9rem;font-weight:750;margin-top:auto;padding-bottom:15px}.pack-link{display:inline-flex;align-self:flex-start;background:#142c3d;border-color:#397da7;color:#d7efff}
+.read-aloud{display:inline-flex;align-items:center;gap:6px;margin:0 0 12px;padding:6px 10px;border:1px solid var(--line);border-radius:9px;background:#111820;color:var(--blue);font:inherit;font-size:.82rem;cursor:pointer}.read-aloud:hover{border-color:var(--accent);background:#142c3d}.read-aloud:disabled{opacity:.5;cursor:not-allowed}
 footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);text-align:center;font-size:.88rem}
 @media(max-width:650px){.packs{grid-template-columns:1fr}.pack{min-height:245px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 </style></head><body>
 <header><div class="wrap top"><div class="brand">APOKOLIPS · DISCOVERY</div><a class="back" href="Home.html">← Back to Home</a></div></header>
-<main class="wrap"><section class="hero"><div class="eyebrow">EXPLORE THE NATURAL WORLD</div><h1>Discover your World</h1><p>Explore animals, dinosaurs, plants and microscopic life from across the world. Choose a topic to discover species, photographs and scientific information.</p></section>
+<main class="wrap"><section class="hero"><div class="eyebrow">EXPLORE THE NATURAL WORLD</div><h1>Discover your World</h1><p id="introText">Explore animals, dinosaurs, plants and microscopic life from across the world. Choose a topic to discover species, photographs and scientific information.</p><button class="read-aloud" type="button" data-read-target="introText">🔊 Read aloud</button></section>
 <section class="packs" aria-label="Explore the natural world">
-<article class="pack"><div class="symbol">🐾</div><h2>Discover Animals</h2><p>Explore mammals, birds, reptiles, marine life and arthropods from around the world.</p><div class="count">20 animal profiles</div><a class="pack-link" href="Animal.html">Discover Animals →</a></article>
-<article class="pack"><div class="symbol">🦖</div><h2>Discover Dinosaurs</h2><p>Discover prehistoric species, their evolution, habitats, behaviour and scientific reconstructions.</p><div class="count">10 dinosaur profiles</div><a class="pack-link" href="Dinosaurs.html">Discover Dinosaurs →</a></article>
-<article class="pack"><div class="symbol">🌿</div><h2>Discover Trees</h2><p>Explore distinctive plant species, their evolution, habitats, life cycles and ecological importance.</p><div class="count">8 plant profiles</div><a class="pack-link" href="Trees.html">Discover Trees →</a></article>
-<article class="pack"><div class="symbol">🦠</div><h2>Discover Microorganisms</h2><p>Explore microscopic bacteria, archaea, fungi, protozoa, microalgae and viruses.</p><div class="count">20 microorganism profiles</div><a class="pack-link" href="Microorganisms.html">Discover Microorganisms →</a></article></section></main><footer class="wrap">Apokolips Discovery · Explore life across the natural world</footer></body></html>
+<article class="pack"><div class="symbol">🐾</div><h2>Discover Animals</h2><p id="animalsText">Explore mammals, birds, reptiles, marine life and arthropods from around the world.</p><button class="read-aloud" type="button" data-read-target="animalsText">🔊 Read aloud</button><div class="count">20 animal profiles</div><a class="pack-link" href="Animal.html">Discover Animals →</a></article>
+<article class="pack"><div class="symbol">🦖</div><h2>Discover Dinosaurs</h2><p id="dinosaursText">Discover prehistoric species, their evolution, habitats, behaviour and scientific reconstructions.</p><button class="read-aloud" type="button" data-read-target="dinosaursText">🔊 Read aloud</button><div class="count">10 dinosaur profiles</div><a class="pack-link" href="Dinosaurs.html">Discover Dinosaurs →</a></article>
+<article class="pack"><div class="symbol">🌿</div><h2>Discover Trees</h2><p id="treesText">Explore distinctive plant species, their evolution, habitats, life cycles and ecological importance.</p><button class="read-aloud" type="button" data-read-target="treesText">🔊 Read aloud</button><div class="count">8 plant profiles</div><a class="pack-link" href="Trees.html">Discover Trees →</a></article>
+<article class="pack"><div class="symbol">🦠</div><h2>Discover Microorganisms</h2><p id="microorganismsText">Explore microscopic bacteria, archaea, fungi, protozoa, microalgae and viruses.</p><button class="read-aloud" type="button" data-read-target="microorganismsText">🔊 Read aloud</button><div class="count">20 microorganism profiles</div><a class="pack-link" href="Microorganisms.html">Discover Microorganisms →</a></article></section></main><footer class="wrap">Apokolips Discovery · Explore life across the natural world</footer><script>
+(function(){
+  const buttons=[...document.querySelectorAll(".read-aloud[data-read-target]")];
+  let activeButton=null;
+  function resetButton(){
+    if(activeButton){activeButton.textContent="🔊 Read aloud";activeButton.disabled=false;activeButton=null;}
+  }
+  buttons.forEach(button=>{
+    button.addEventListener("click",()=>{
+      const target=document.getElementById(button.dataset.readTarget);
+      const text=target?.textContent?.trim();
+      if(!text)return;
+      if(!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance==="undefined"){
+        button.textContent="Audio unavailable";button.disabled=true;return;
+      }
+      window.speechSynthesis.cancel();
+      resetButton();
+      activeButton=button;
+      button.textContent="⏸ Reading…";
+      const utterance=new SpeechSynthesisUtterance(text);
+      utterance.lang="en-US";
+      utterance.rate=.95;
+      utterance.onend=resetButton;
+      utterance.onerror=resetButton;
+      window.speechSynthesis.speak(utterance);
+    });
+  });
+  if(!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance==="undefined"){
+    buttons.forEach(button=>{button.disabled=true;button.title="Text-to-speech is not supported by this browser";});
+  }
+  window.addEventListener("beforeunload",()=>{if("speechSynthesis" in window)window.speechSynthesis.cancel();});
+})();
+</script></body></html>
