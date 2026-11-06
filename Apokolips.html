@@ -13,11 +13,59 @@
 footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);text-align:center;font-size:.88rem}
 @media(max-width:650px){.packs{grid-template-columns:1fr}.pack{min-height:245px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
-</style></head><body>
+</style><style id="global-read-aloud-style">
+#globalReadAloudControls{position:fixed;right:16px;bottom:16px;z-index:99999;display:flex;gap:8px;align-items:center;padding:8px;background:rgba(8,12,18,.94);border:1px solid #527da3;border-radius:14px;box-shadow:0 8px 28px #0008;backdrop-filter:blur(10px)}
+#globalReadAloudControls button{border:1px solid #6ca8dc;border-radius:9px;background:#14283b;color:#eef7ff;padding:9px 12px;font:600 13px/1.2 system-ui,sans-serif;cursor:pointer}
+#globalReadAloudControls button:hover{background:#204765}
+#globalReadAloudControls button:focus-visible{outline:2px solid #b8e0ff;outline-offset:3px}
+#globalReadAloudStatus{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:480px){#globalReadAloudControls{right:10px;bottom:10px;padding:6px}#globalReadAloudControls button{padding:8px 10px;font-size:12px}}
+</style>
+</head><body>
 <header><div class="wrap top"><div class="brand">APOKOLIPS · DISCOVERY</div><a class="back" href="index.html">← Back to English Tenses</a></div></header>
 <main class="wrap"><section class="hero"><div class="eyebrow">EXPLORE THE NATURAL WORLD</div><h1>Discover your World</h1><p>Explore animals, dinosaurs, plants and microscopic life from across the world. Choose a topic to discover species, photographs and scientific information.</p></section>
 <section class="packs" aria-label="Explore the natural world">
 <article class="pack"><div class="symbol">🐾</div><h2>Discover Animals</h2><p>Explore mammals, birds, reptiles, marine life and arthropods from around the world.</p><div class="count">20 animal profiles</div><a class="pack-link" href="Animal.html">Discover Animals →</a></article>
 <article class="pack"><div class="symbol">🦖</div><h2>Discover Dinosaurs</h2><p>Discover prehistoric species, their evolution, habitats, behaviour and scientific reconstructions.</p><div class="count">10 dinosaur profiles</div><a class="pack-link" href="Dinosaurs.html">Discover Dinosaurs →</a></article>
 <article class="pack"><div class="symbol">🌿</div><h2>Discover Trees</h2><p>Explore distinctive plant species, their evolution, habitats, life cycles and ecological importance.</p><div class="count">8 plant profiles</div><a class="pack-link" href="Trees.html">Discover Trees →</a></article>
-<article class="pack"><div class="symbol">🦠</div><h2>Discover Microorganisms</h2><p>Explore microscopic bacteria, archaea, fungi, protozoa, microalgae and viruses.</p><div class="count">20 microorganism profiles</div><a class="pack-link" href="Microorganisms.html">Discover Microorganisms →</a></article></section></main><footer class="wrap">Apokolips Discovery · Explore life across the natural world</footer></body></html>
+<article class="pack"><div class="symbol">🦠</div><h2>Discover Microorganisms</h2><p>Explore microscopic bacteria, archaea, fungi, protozoa, microalgae and viruses.</p><div class="count">20 microorganism profiles</div><a class="pack-link" href="Microorganisms.html">Discover Microorganisms →</a></article></section></main><footer class="wrap">Apokolips Discovery · Explore life across the natural world</footer><script id="global-read-aloud-script">
+(function(){
+  if(!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
+  const controls=document.createElement("div");
+  controls.id="globalReadAloudControls";
+  controls.setAttribute("role","group");
+  controls.setAttribute("aria-label","Page reading controls");
+  const read=document.createElement("button");
+  read.type="button";read.textContent="🔊 Read page";
+  read.setAttribute("aria-label","Read the visible page aloud");
+  const stop=document.createElement("button");
+  stop.type="button";stop.textContent="■ Stop";
+  stop.setAttribute("aria-label","Stop reading aloud");
+  const status=document.createElement("span");
+  status.id="globalReadAloudStatus";status.setAttribute("aria-live","polite");
+  controls.append(read,stop,status);document.body.append(controls);
+  let activeUtterance=null;
+  function reset(){read.textContent="🔊 Read page";read.disabled=false;activeUtterance=null;status.textContent="";}
+  function stopReading(){window.speechSynthesis.cancel();reset();}
+  read.addEventListener("click",function(){
+    const root=document.querySelector("main")||document.body;
+    const clone=root.cloneNode(true);
+    clone.querySelectorAll("script,style,button,nav,header,footer,input,select,textarea,[aria-hidden='true'],#globalReadAloudControls").forEach(el=>el.remove());
+    const content=(clone.innerText||clone.textContent||"").replace(/\s+/g," ").trim();
+    if(!content){status.textContent="There is no visible page text to read.";return;}
+    window.speechSynthesis.cancel();
+    const utterance=new SpeechSynthesisUtterance(content);
+    utterance.lang="en-US";utterance.rate=0.95;utterance.pitch=1;
+    const voices=window.speechSynthesis.getVoices();
+    const voice=voices.find(v=>/^en-US$/i.test(v.lang))||voices.find(v=>/^en-GB$/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));
+    if(voice)utterance.voice=voice;
+    activeUtterance=utterance;
+    utterance.onend=reset;utterance.onerror=reset;
+    read.textContent="⏸ Reading…";status.textContent="Reading page text.";
+    window.speechSynthesis.speak(utterance);
+  });
+  stop.addEventListener("click",stopReading);
+  window.addEventListener("pagehide",stopReading);
+})();
+</script>
+</body></html>
