@@ -4,10 +4,9 @@
 <header><div class="wrap top"><div class="brand">APOKOLIPS · DINOSAUR DISCOVERY</div><div class="top-links"><a class="back" href="Apokolips.html">← Back to Apokolips</a></div></div></header>
 <main class="wrap"><section class="hero"><div class="eyebrow">PREHISTORIC LIFE</div><h1>Discover the Dinosaurs.</h1><p>Explore ten dinosaur species, their scientific history, habitats and fascinating characteristics. Every image is labelled as a scientific reconstruction.</p><p class="dino-note">Select a dinosaur to open its complete profile, photographs and video on the animal profile page.</p></section>
 <div class="toolbar"><input id="search" class="search" type="search" placeholder="Search dinosaurs, periods or habitats…" aria-label="Search dinosaurs"></div><section class="grid" id="dinosaurGrid" aria-live="polite"></section></main><footer class="wrap">Apokolips · Dinosaur Discovery</footer>
-<script src="dinosaur-data.js"></script>
 <script>
+const animals=window.APO_DINOSAUR_DATA;
 const dinosaurs=window.APO_DINOSAUR_DATA;
-
 const grid=document.getElementById("dinosaurGrid"),search=document.getElementById("search");
 async function loadDinosaurImage(animal,img,caption){try{
 const term="filetype:bitmap "+animal.name+" life reconstruction";
