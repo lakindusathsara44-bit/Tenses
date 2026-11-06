@@ -152,7 +152,7 @@ function render(){
     explore.textContent="Explore animal →";
     copy.append(title,meta,credit,explore);
     button.append(media,copy);
-    button.addEventListener("click",()=>selectAnimal(a.id));
+    button.addEventListener("click",()=>{window.location.href="Apo.html?id="+encodeURIComponent(a.id)});
     grid.append(button);
   });
   observeAnimalCardImages();
