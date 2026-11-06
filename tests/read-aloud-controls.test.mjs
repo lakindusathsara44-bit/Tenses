@@ -89,3 +89,23 @@ test("both learning pages include the WhatsApp issue-contact button with the req
     assert.match(html, /Ask \/ Report an Issue/);
   }
 });
+
+
+test("lesson paragraphs and activity descriptions expose their own read buttons", () => {
+  assert.match(indexHtml, /const paragraph=section\.querySelector\('\.hint'\);if\(paragraph\)addReadAloud\(paragraph\)/);
+  assert.match(activitiesHtml, /addReadAloud\(document\.getElementById\("taskDesc"\)\)/);
+  assert.match(activitiesHtml, /value\.split\(\/\\s\+\/\)/);
+});
+
+test("activity answer choices receive read buttons only when they are complete sentences", () => {
+  assert.match(activitiesHtml, /if\(isSpeakableSentence\(opt\)\)wrap\.append\(createSpeakButton\(opt\)\)/);
+  const start = activitiesHtml.indexOf("function isSpeakableSentence(text){");
+  const end = activitiesHtml.indexOf("\\n}", start);
+  assert.ok(start >= 0 && end > start, "sentence detector must exist");
+  const detector = activitiesHtml.slice(start, end + 2);
+  const context = {};
+  vm.runInNewContext(detector + "\\nglobalThis.checkSentence = isSpeakableSentence;", context);
+  assert.equal(context.checkSentence("The student reads every day."), true);
+  assert.equal(context.checkSentence("reads every day"), false);
+  assert.equal(context.checkSentence("A short option"), false);
+});
