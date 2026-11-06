@@ -251,12 +251,12 @@ function addReadAloud(element){
 }
 function isSpeakableSentence(text){
  const value=String(text||"").trim();
- return value.split(/\\s+/).length>=3&&/[.!?]$/.test(value);
+ return value.split(/\s+/).length>=3&&/[.!?]$/.test(value);
 }
 
 
 function renderList(){const el=document.getElementById("taskList");el.innerHTML="";DATA.forEach((t,i)=>{const b=document.createElement("button");b.className="task-link"+(selected===i?" active":"");const r=saved[i];b.innerHTML='<span><b>'+(i+1)+'. '+t.name+'</b></span><span class="pill '+(r?"done":"")+'">'+(r?r.score+"%":"Start")+'</span>';b.onclick=()=>openTask(i);el.append(b)})}
-function openTask(i){selected=i;answers={};submitted=false;const t=DATA[i];document.getElementById("taskLabel").textContent="Activity "+(i+1)+" of 12";document.getElementById("taskTitle").textContent=t.name;document.getElementById("taskDesc").textContent=t.use;addReadAloud(document.getElementById("taskDesc"));document.getElementById("taskScore").textContent=saved[i]?"Previous score: "+saved[i].score+"%":"Not submitted";document.getElementById("emptyState").hidden=true;document.getElementById("actions").hidden=false;document.getElementById("result").innerHTML="";const root=document.getElementById("questions");root.innerHTML="";makeQuestions(t,i).forEach((q,j)=>{const card=document.createElement("article");card.className="question";card.dataset.answer=q.answer;card.innerHTML='<div class="qtop"><span class="qtitle">Question '+(j+1)+' · '+q.skill+'</span><span class="pill">1 mark</span></div><p></p><div class="options"></div>';card.querySelector("p").textContent=q.prompt;addReadAloud(card.querySelector("p"));const opts=card.querySelector(".options");q.opts.forEach((opt,optionIndex)=>{const wrap=document.createElement("div");wrap.className="option-wrap";const b=document.createElement("button");b.className="option";b.type="button";b.textContent=opt;b.dataset.optionIndex=String(optionIndex);b.dataset.isCorrect=String(opt===q.answer);b.onclick=()=>{if(submitted)return;answers[j]={optionIndex,isCorrect:b.dataset.isCorrect==="true"};[...opts.querySelectorAll(".option")].forEach(x=>x.classList.toggle("selected",x===b))};wrap.append(b);wrap.append(createSpeakButton(opt));opts.append(wrap)});root.append(card)});renderList();document.getElementById("activityCard").scrollIntoView({behavior:"smooth",block:"start"})}
+function openTask(i){selected=i;answers={};submitted=false;const t=DATA[i];document.getElementById("taskLabel").textContent="Activity "+(i+1)+" of 12";document.getElementById("taskTitle").textContent=t.name;document.getElementById("taskDesc").textContent=t.use;addReadAloud(document.getElementById("taskDesc"));document.getElementById("taskScore").textContent=saved[i]?"Previous score: "+saved[i].score+"%":"Not submitted";document.getElementById("emptyState").hidden=true;document.getElementById("actions").hidden=false;document.getElementById("result").innerHTML="";const root=document.getElementById("questions");root.innerHTML="";makeQuestions(t,i).forEach((q,j)=>{const card=document.createElement("article");card.className="question";card.dataset.answer=q.answer;card.innerHTML='<div class="qtop"><span class="qtitle">Question '+(j+1)+' · '+q.skill+'</span><span class="pill">1 mark</span></div><p></p><div class="options"></div>';card.querySelector("p").textContent=q.prompt;addReadAloud(card.querySelector("p"));const opts=card.querySelector(".options");q.opts.forEach((opt,optionIndex)=>{const wrap=document.createElement("div");wrap.className="option-wrap";const b=document.createElement("button");b.className="option";b.type="button";b.textContent=opt;b.dataset.optionIndex=String(optionIndex);b.dataset.isCorrect=String(opt===q.answer);b.onclick=()=>{if(submitted)return;answers[j]={optionIndex,isCorrect:b.dataset.isCorrect==="true"};[...opts.querySelectorAll(".option")].forEach(x=>x.classList.toggle("selected",x===b))};wrap.append(b);if(isSpeakableSentence(opt))wrap.append(createSpeakButton(opt));opts.append(wrap)});root.append(card)});renderList();document.getElementById("activityCard").scrollIntoView({behavior:"smooth",block:"start"})}
 function submit(){if(Object.keys(answers).length!==10){document.getElementById("result").innerHTML='<div class="result"><b>Answer all ten MCQs before submitting.</b><p class="hint">Answered '+Object.keys(answers).length+' of 10.</p></div>';return}const cards=[...document.querySelectorAll(".question")];let score=0,skills={};cards.forEach((card,j)=>{const title=card.querySelector(".qtitle").textContent.split(" · ")[1],chosen=answers[j];const ok=chosen?.isCorrect===true;if(ok)score++;skills[title]=ok?100:0;[...card.querySelectorAll(".option")].forEach(b=>{if(b.dataset.isCorrect==="true")b.classList.add("correct");if(Number(b.dataset.optionIndex)===chosen?.optionIndex&&!ok)b.classList.add("wrong");b.disabled=true})});submitted=true;const pct=Math.round(score/10*100),grade=pct>=90?"A":pct>=80?"B":pct>=70?"C":pct>=50?"S":"W";saved[selected]={score:pct,correct:score,skills,grade,at:new Date().toISOString()};persist();document.getElementById("taskScore").textContent="Score: "+pct+"% · Grade "+grade;const desc=pct>=90?"Excellent mastery — keep it up!":pct>=70?"Good progress. Review the missed concepts and try again.":pct>=50?"Developing understanding. Revisit the lesson and practise again.":"Needs improvement. Study the structures and repeat this activity.";document.getElementById("result").innerHTML='<div class="result"><h3>Activity submitted · '+pct+' / 100 · Grade '+grade+'</h3><p>'+desc+'</p><p><b>'+score+' of 10</b> answers correct. Your progress has been updated automatically.</p><div class="rubric"><div><b>90–100 · A</b>Excellent</div><div><b>80–89 · B</b>Very good</div><div><b>70–79 · C</b>Good</div><div><b>50–69 · S</b>Satisfactory<br>Below 50 · W</div></div><p class="hint">MCQ marking: 10 questions × 1 mark = 10 raw marks, converted to a percentage. Each question has five choices and only one correct answer. The latest submission replaces the previous score for this activity.</p></div>';updateDashboard();renderList()}
 function updateDashboard(){
 const vals=Object.values(saved),count=vals.length,avg=count?Math.round(vals.reduce((s,x)=>s+x.score,0)/count):0;
@@ -317,58 +317,4 @@ setTimeout(hideLoader,4200);
   <span>Ask / Report an Issue</span>
 </a>
 
-
-<style id="global-read-aloud-style">
-#globalReadAloud{position:fixed;right:16px;bottom:16px;z-index:9999;display:flex;gap:8px;align-items:center;flex-wrap:wrap;max-width:calc(100vw - 24px);padding:8px;background:rgba(8,12,18,.94);border:1px solid #42617a;border-radius:14px;box-shadow:0 8px 28px #0008}
-#globalReadAloud button{border:1px solid #52738c;border-radius:9px;padding:9px 12px;background:#142b3c;color:#f2f7fb;font:600 14px/1.2 system-ui,sans-serif;cursor:pointer}
-#globalReadAloud button:focus-visible{outline:2px solid #a9dfff;outline-offset:3px}
-#globalReadStatus{color:#c5d6e2;font:12px/1.3 system-ui,sans-serif;max-width:180px}
-@media(max-width:480px){#globalReadAloud{right:8px;bottom:8px;left:8px;justify-content:center}#globalReadStatus{max-width:100%;text-align:center}}
-@media(prefers-reduced-motion:reduce){#globalReadAloud *{transition:none!important}}
-</style>
-<div id="globalReadAloud" role="group" aria-label="Page read aloud controls">
-<button type="button" id="globalReadStart" aria-label="Read page aloud">🔊 Read aloud</button>
-<button type="button" id="globalReadStop" aria-label="Stop reading">■ Stop</button>
-<span id="globalReadStatus" role="status" aria-live="polite">Listen to this page</span>
-</div>
-<script id="global-read-aloud-script">
-(function(){
- const start=document.getElementById("globalReadStart");
- const stop=document.getElementById("globalReadStop");
- const status=document.getElementById("globalReadStatus");
- if(!start||!stop||!status)return;
- let active=null;
- function getPageText(){
-  const detail=document.querySelector(".detail.show");
-  const root=detail||document.querySelector("main")||document.body;
-  const clone=root.cloneNode(true);
-  clone.querySelectorAll("script,style,button,input,select,textarea,nav,footer,[aria-hidden='true'],#globalReadAloud,.actions,.filter,.toolbar").forEach(el=>el.remove());
-  return (clone.innerText||clone.textContent||"").replace(/\s+/g," ").trim();
- }
- function stopReading(){
-  if("speechSynthesis" in window)window.speechSynthesis.cancel();
-  active=null;status.textContent="Reading stopped";start.textContent="🔊 Read aloud";
- }
- start.addEventListener("click",function(){
-  if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){
-   status.textContent="Text-to-speech is not supported by this browser";return;
-  }
-  const text=getPageText();
-  if(!text){status.textContent="There is no page text to read";return;}
-  stopReading();
-  const utterance=new SpeechSynthesisUtterance(text);
-  active=utterance;utterance.lang="en-US";utterance.rate=.95;utterance.pitch=1;
-  const voices=window.speechSynthesis.getVoices();
-  const voice=voices.find(v=>/^en-US$/i.test(v.lang))||voices.find(v=>/^en-GB$/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));
-  if(voice)utterance.voice=voice;
-  utterance.onstart=()=>{status.textContent="Reading page…";start.textContent="⏸ Reading…"};
-  utterance.onend=()=>{if(active===utterance){active=null;status.textContent="Finished reading";start.textContent="🔊 Read aloud"}};
-  utterance.onerror=event=>{if(active===utterance){active=null;status.textContent=event.error==="canceled"?"Reading stopped":"Could not read this page";start.textContent="🔊 Read aloud"}};
-  window.speechSynthesis.speak(utterance);
-  status.textContent="Preparing speech…";
- });
- stop.addEventListener("click",stopReading);
- window.addEventListener("pagehide",()=>{if("speechSynthesis" in window)window.speechSynthesis.cancel()});
-})();
-</script>
 </body></html>
