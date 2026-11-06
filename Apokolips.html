@@ -85,7 +85,8 @@ async function loadAnimalCardImage(animal,img,caption){
     img.hidden=false;
     const licence=best.info.extmetadata?.LicenseShortName?.value;
     const artist=best.info.extmetadata?.Artist?.value?.replace(/<[^>]*>/g,"").trim();
-    const placeholder=img.parentElement.querySelector(".card-photo-placeholder");if(placeholder)placeholder.hidden=true;\n    caption.textContent=(animal.group==="Dinosaur"?"Scientific reconstruction · ":"")+
+    const placeholder=img.parentElement.querySelector(".card-photo-placeholder");if(placeholder)placeholder.hidden=true;
+    caption.textContent=(animal.group==="Dinosaur"?"Scientific reconstruction · ":"")+
       (artist?artist+" · ":"")+(licence||"See source for licence")+" · Wikimedia Commons";
   }catch(error){
     img.hidden=true;
