@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b0f">
+<meta name="description" content="Daily educational articles about animals, plants, dinosaurs and microorganisms.">
+<title>Daily Articles | Apokolips Discovery</title>
+<style>
+:root{color-scheme:dark;--bg:#080b0f;--panel:#111820;--line:#2a3541;--text:#f1f5f9;--muted:#aab6c3;--blue:#9bd5ff;--accent:#63b8f5}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#1a2937,transparent 48%),var(--bg);color:var(--text);font:16px/1.7 Inter,system-ui,sans-serif}
+.wrap{width:min(1000px,calc(100% - 32px));margin:auto}header{padding:22px 0;border-bottom:1px solid var(--line)}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.brand,.eyebrow{color:var(--blue);font-weight:850;letter-spacing:.13em}.back,.filter{color:var(--blue);text-decoration:none;border:1px solid var(--line);border-radius:11px;padding:9px 13px;background:#101923}
+.hero{padding:55px 0 25px}.hero h1{font-size:clamp(2.4rem,7vw,4.6rem);line-height:1.04;letter-spacing:-.04em;margin:8px 0}.hero p{max-width:700px;color:var(--muted)}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}.filter{cursor:pointer;font:inherit}.filter.active{background:#17364d;border-color:#4b94c2;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0 55px}.card{background:linear-gradient(145deg,#151e28,#0e141b);border:1px solid var(--line);border-radius:17px;padding:21px;cursor:pointer;transition:.2s}.card:hover{transform:translateY(-3px);border-color:#5799c4}.meta{font-size:.78rem;color:var(--blue);font-weight:800;letter-spacing:.08em;text-transform:uppercase}.card h2{font-size:1.35rem;line-height:1.25;margin:9px 0}.card p{color:var(--muted);margin:0 0 12px}.date{font-size:.82rem;color:#8194a6}
+.article{background:#10171f;border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,38px);margin:20px 0 55px}.article h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.12}.article h2{margin-top:28px;color:#b9e0ff}.article p{white-space:pre-line;color:#d3dce5}.article .intro{font-size:1.08rem;color:#eaf2f8}.facts,.reading{background:#0b1219;border:1px solid var(--line);border-radius:13px;padding:17px;margin:24px 0}.facts li{margin:8px 0}.reading a{color:var(--blue)}.back-list{display:inline-block;color:var(--blue);margin:5px 0 12px;cursor:pointer}
+.status{color:var(--muted);padding:20px 0}.empty{border:1px dashed #3b4a59;border-radius:15px;padding:25px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);text-align:center;font-size:.88rem}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.hero{padding-top:40px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap top"><div class="brand">APOKOLIPS · DAILY LEARNING</div><a class="back" href="Apokolips.html">← Discovery Home</a></div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">ONE NEW ARTICLE EVERY DAY</div><h1>Daily Science & Nature</h1><p>Explore the living world through educational articles about animals, plants and trees, dinosaurs, and microorganisms. New articles are scheduled for 06:00 Sri Lanka time.</p></section>
+<div id="filters" class="toolbar" aria-label="Filter articles"></div>
+<div id="content" class="status" aria-live="polite">Loading articles…</div>
+</main>
+<footer class="wrap">Apokolips Discovery · Learn something new every day</footer>
+<script>
+const content=document.getElementById("content"),filters=document.getElementById("filters");
+let articles=[],selected="All";
+const categories=["All","Animals","Plants & Trees","Dinosaurs","Microorganisms"];
+function safe(value){return String(value??"")}
+function make(tag,cls,text){const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el}
+function showList(){
+ content.innerHTML="";const list=articles.filter(a=>selected==="All"||a.category===selected);
+ if(!list.length){content.append(make("div","empty","No articles have been published yet. The first article will appear after the publishing workflow runs successfully."));return}
+ const grid=make("div","grid");
+ list.forEach(a=>{const card=make("article","card");card.tabIndex=0;card.setAttribute("role","button");card.setAttribute("aria-label","Read "+safe(a.title));card.append(make("div","meta",safe(a.category)));card.append(make("h2","",safe(a.title)));card.append(make("p","",safe(a.summary)));card.append(make("div","date",safe(a.date)+" · Read article →"));const open=()=>showArticle(a);card.addEventListener("click",open);card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open()}});grid.append(card)});
+ content.append(grid);
+}
+function showArticle(meta){
+ content.innerHTML="";const back=make("a","back-list","← All articles");back.href="#articles";back.addEventListener("click",e=>{e.preventDefault();history.replaceState(null,"",location.pathname);showList()});content.append(back);
+ const box=make("article","article");box.append(make("div","meta",safe(meta.category)+" · "+safe(meta.date)));box.append(make("h1","",safe(meta.title)));box.append(make("p","",safe(meta.summary)));
+ content.append(box);
+ fetch("articles/"+encodeURIComponent(meta.file)).then(r=>{if(!r.ok)throw new Error("Article not found");return r.json()}).then(a=>{
+  box.append(make("p","intro",safe(a.introduction)));
+  (a.sections||[]).forEach(s=>{box.append(make("h2","",safe(s.heading)));box.append(make("p","",safe(s.body)))});
+  const facts=make("section","facts");facts.append(make("h2","","Did you know?"));const ul=make("ul");(a.facts||[]).forEach(f=>ul.append(make("li","",safe(f))));facts.append(ul);box.append(facts);
+  box.append(make("h2","","Conclusion"));box.append(make("p","",safe(a.conclusion)));
+  if(Array.isArray(a.further_reading)&&a.further_reading.length){const reading=make("section","reading");reading.append(make("h2","","Further reading"));a.further_reading.forEach(item=>{const p=make("p");const link=make("a","",safe(item.title));link.href=safe(item.url);link.target="_blank";link.rel="noopener noreferrer";p.append(link);reading.append(p)});box.append(reading)}
+  history.replaceState(null,"","#"+encodeURIComponent(meta.file));
+ }).catch(()=>box.append(make("p","status","This article could not be loaded. Please try again later.")));
+}
+function renderFilters(){filters.innerHTML="";categories.forEach(c=>{const b=make("button","filter"+(selected===c?" active":""),c);b.type="button";b.addEventListener("click",()=>{selected=c;renderFilters();showList()});filters.append(b)})}
+fetch("articles/index.json").then(r=>{if(!r.ok)throw new Error("Index unavailable");return r.json()}).then(data=>{articles=Array.isArray(data)?data:[];renderFilters();showList()}).catch(()=>{content.textContent="Articles are temporarily unavailable. Please refresh later."});
+</script>
+</body>
+</html>
