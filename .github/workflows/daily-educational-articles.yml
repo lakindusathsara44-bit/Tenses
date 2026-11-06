@@ -1,0 +1,43 @@
+name: Daily Educational Articles
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+      timezone: "Asia/Colombo"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-educational-articles
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate today's educational article
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/publish_daily_article.py
+
+      - name: Commit and publish article
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add articles/
+            git commit -m "Publish daily educational article"
+            git push
+          else
+            echo "No new article was generated."
+          fi
