@@ -86,7 +86,7 @@ async function loadAnimalCardImage(animal,img,caption){
     img.hidden=false;
     const licence=best.info.extmetadata?.LicenseShortName?.value;
     const artist=best.info.extmetadata?.Artist?.value?.replace(/<[^>]*>/g,"").trim();
-    caption.textContent=(animal.group==="Dinosaur"?"Scientific reconstruction · ":"")+
+    const placeholder=img.parentElement.querySelector(".card-photo-placeholder");if(placeholder)placeholder.hidden=true;\n    caption.textContent=(animal.group==="Dinosaur"?"Scientific reconstruction · ":"")+
       (artist?artist+" · ":"")+(licence||"See source for licence")+" · Wikimedia Commons";
     const link=img.closest("a");
     link.href=source;
@@ -105,7 +105,7 @@ function observeAnimalCardImages(){
         const img=entry.target;
         cardObserver.unobserve(img);
         const animal=animals.find(a=>a.id===img.dataset.animalId);
-        if(animal)queueAnimalCardImage(animal,img,img.parentElement.nextElementSibling.querySelector(".photo-credit"));
+        if(animal)queueAnimalCardImage(animal,img,img.closest(".animal").querySelector(".photo-credit"));
       });
     },{rootMargin:"260px 0px"});
     document.querySelectorAll(".card-photo[data-animal-id]").forEach(img=>cardObserver.observe(img));
