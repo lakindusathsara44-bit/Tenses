@@ -20,4 +20,58 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);text-a
 <article class="pack"><div class="symbol">🐾</div><h2>Discover Animals</h2><p>Explore mammals, birds, reptiles, marine life and arthropods from around the world.</p><div class="count">20 animal profiles</div><a class="pack-link" href="Animal.html">Discover Animals →</a></article>
 <article class="pack"><div class="symbol">🦖</div><h2>Discover Dinosaurs</h2><p>Discover prehistoric species, their evolution, habitats, behaviour and scientific reconstructions.</p><div class="count">10 dinosaur profiles</div><a class="pack-link" href="Dinosaurs.html">Discover Dinosaurs →</a></article>
 <article class="pack"><div class="symbol">🌿</div><h2>Discover Trees</h2><p>Explore distinctive plant species, their evolution, habitats, life cycles and ecological importance.</p><div class="count">8 plant profiles</div><a class="pack-link" href="Trees.html">Discover Trees →</a></article>
-<article class="pack"><div class="symbol">🦠</div><h2>Discover Microorganisms</h2><p>Explore microscopic bacteria, archaea, fungi, protozoa, microalgae and viruses.</p><div class="count">20 microorganism profiles</div><a class="pack-link" href="Microorganisms.html">Discover Microorganisms →</a></article></section></main><footer class="wrap">Apokolips Discovery · Explore life across the natural world</footer></body></html>
+<article class="pack"><div class="symbol">🦠</div><h2>Discover Microorganisms</h2><p>Explore microscopic bacteria, archaea, fungi, protozoa, microalgae and viruses.</p><div class="count">20 microorganism profiles</div><a class="pack-link" href="Microorganisms.html">Discover Microorganisms →</a></article></section></main><footer class="wrap">Apokolips Discovery · Explore life across the natural world</footer>
+<style id="global-read-aloud-style">
+#globalReadAloud{position:fixed;right:16px;bottom:16px;z-index:9999;display:flex;gap:8px;align-items:center;flex-wrap:wrap;max-width:calc(100vw - 24px);padding:8px;background:rgba(8,12,18,.94);border:1px solid #42617a;border-radius:14px;box-shadow:0 8px 28px #0008}
+#globalReadAloud button{border:1px solid #52738c;border-radius:9px;padding:9px 12px;background:#142b3c;color:#f2f7fb;font:600 14px/1.2 system-ui,sans-serif;cursor:pointer}
+#globalReadAloud button:focus-visible{outline:2px solid #a9dfff;outline-offset:3px}
+#globalReadStatus{color:#c5d6e2;font:12px/1.3 system-ui,sans-serif;max-width:180px}
+@media(max-width:480px){#globalReadAloud{right:8px;bottom:8px;left:8px;justify-content:center}#globalReadStatus{max-width:100%;text-align:center}}
+@media(prefers-reduced-motion:reduce){#globalReadAloud *{transition:none!important}}
+</style>
+<div id="globalReadAloud" role="group" aria-label="Page read aloud controls">
+<button type="button" id="globalReadStart" aria-label="Read page aloud">🔊 Read aloud</button>
+<button type="button" id="globalReadStop" aria-label="Stop reading">■ Stop</button>
+<span id="globalReadStatus" role="status" aria-live="polite">Listen to this page</span>
+</div>
+<script id="global-read-aloud-script">
+(function(){
+ const start=document.getElementById("globalReadStart");
+ const stop=document.getElementById("globalReadStop");
+ const status=document.getElementById("globalReadStatus");
+ if(!start||!stop||!status)return;
+ let active=null;
+ function getPageText(){
+  const detail=document.querySelector(".detail.show");
+  const root=detail||document.querySelector("main")||document.body;
+  const clone=root.cloneNode(true);
+  clone.querySelectorAll("script,style,button,input,select,textarea,nav,footer,[aria-hidden='true'],#globalReadAloud,.actions,.filter,.toolbar").forEach(el=>el.remove());
+  return (clone.innerText||clone.textContent||"").replace(/\s+/g," ").trim();
+ }
+ function stopReading(){
+  if("speechSynthesis" in window)window.speechSynthesis.cancel();
+  active=null;status.textContent="Reading stopped";start.textContent="🔊 Read aloud";
+ }
+ start.addEventListener("click",function(){
+  if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){
+   status.textContent="Text-to-speech is not supported by this browser";return;
+  }
+  const text=getPageText();
+  if(!text){status.textContent="There is no page text to read";return;}
+  stopReading();
+  const utterance=new SpeechSynthesisUtterance(text);
+  active=utterance;utterance.lang="en-US";utterance.rate=.95;utterance.pitch=1;
+  const voices=window.speechSynthesis.getVoices();
+  const voice=voices.find(v=>/^en-US$/i.test(v.lang))||voices.find(v=>/^en-GB$/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));
+  if(voice)utterance.voice=voice;
+  utterance.onstart=()=>{status.textContent="Reading page…";start.textContent="⏸ Reading…"};
+  utterance.onend=()=>{if(active===utterance){active=null;status.textContent="Finished reading";start.textContent="🔊 Read aloud"}};
+  utterance.onerror=event=>{if(active===utterance){active=null;status.textContent=event.error==="canceled"?"Reading stopped":"Could not read this page";start.textContent="🔊 Read aloud"}};
+  window.speechSynthesis.speak(utterance);
+  status.textContent="Preparing speech…";
+ });
+ stop.addEventListener("click",stopReading);
+ window.addEventListener("pagehide",()=>{if("speechSynthesis" in window)window.speechSynthesis.cancel()});
+})();
+</script>
+</body></html>
