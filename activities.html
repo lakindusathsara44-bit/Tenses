@@ -108,8 +108,51 @@ html[data-theme="dark"] .speak-btn{background:#153e64;color:#c8e5ff;border-color
 .whatsapp-issue-btn{position:fixed;right:18px;bottom:18px;z-index:1000;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:11px 17px;border:1px solid #159b55;border-radius:999px;background:#20c76a;color:#fff;text-decoration:none;font-family:inherit;font-size:.92rem;font-weight:750;line-height:1.2;box-shadow:0 8px 24px #063b2440;transition:transform .18s,background .18s,box-shadow .18s}
 .whatsapp-issue-btn:hover{background:#16a85a;transform:translateY(-2px);box-shadow:0 11px 28px #063b2450}
 .whatsapp-issue-btn:focus-visible{outline:3px solid #8ed9ff;outline-offset:3px}
-.whatsapp-issue-icon{display:grid;place-items:center;width:25px;height:25px;border:2px solid currentColor;border-radius:50%;font-size:16px;line-height:1}
+.whatsapp-issue-icon{display:block;flex:0 0 25px;width:25px;height:25px;line-height:1}
 @media(max-width:480px){.whatsapp-issue-btn{right:12px;bottom:12px;min-height:46px;padding:10px 14px;font-size:.86rem}}
+
+
+/* Dark theme refinement: near-black surfaces with restrained light-blue accents */
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --blue:#8ecbff;--deep:#b9ddff;--sky:#20252b;--pale:#15191e;
+  --ink:#f1f4f7;--muted:#aab3bd;--line:#30363d;--white:#08090a;
+  --shadow:0 14px 34px #000a;
+}
+html[data-theme="dark"] body{background:linear-gradient(180deg,#050607 0,#0b0d10 360px,#050607 100%);color:#f1f4f7}
+html[data-theme="dark"] header{background:radial-gradient(ellipse at top,#171c22 0,transparent 72%)}
+html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3,html[data-theme="dark"] h4,
+html[data-theme="dark"] .section h3{color:#a9d7ff}
+html[data-theme="dark"] .lead,html[data-theme="dark"] .hint,html[data-theme="dark"] .meaning,
+html[data-theme="dark"] .sinhala,html[data-theme="dark"] footer{color:#aab3bd}
+html[data-theme="dark"] .stat,html[data-theme="dark"] .sidebar,html[data-theme="dark"] .welcome,
+html[data-theme="dark"] .tense-panel,html[data-theme="dark"] .metric,html[data-theme="dark"] .card,
+html[data-theme="dark"] .chart,html[data-theme="dark"] .example,html[data-theme="dark"] .rubric div,
+html[data-theme="dark"] .search,html[data-theme="dark"] .tab,html[data-theme="dark"] .quiz-options button,
+html[data-theme="dark"] .option,html[data-theme="dark"] .task-link,html[data-theme="dark"] .structure,
+html[data-theme="dark"] .form-card,html[data-theme="dark"] .quiz,html[data-theme="dark"] .passive,
+html[data-theme="dark"] .result,html[data-theme="dark"] .empty,html[data-theme="dark"] .settings-panel,
+html[data-theme="dark"] .mini{
+  background:#111418!important;color:#edf2f7!important;border-color:#30363d!important;
+}
+html[data-theme="dark"] .tense-link{color:#c9d4df}
+html[data-theme="dark"] .tense-link:hover,html[data-theme="dark"] .tense-link.active,
+html[data-theme="dark"] .task-link.active{background:#252b32!important;color:#fff!important}
+html[data-theme="dark"] .num,html[data-theme="dark"] .tag,html[data-theme="dark"] .ex-no,
+html[data-theme="dark"] .pill{background:#242a31;color:#b9ddff;border-color:#3b4651}
+html[data-theme="dark"] .formula,html[data-theme="dark"] .sentence,html[data-theme="dark"] .form-card p,
+html[data-theme="dark"] .form-card b,html[data-theme="dark"] .passive p,html[data-theme="dark"] .qtitle{color:#e4edf5}
+html[data-theme="dark"] .flip,html[data-theme="dark"] .btn.secondary{
+  background:#20262d;color:#b9ddff;border-color:#3a4652;
+}
+html[data-theme="dark"] .flip:hover,html[data-theme="dark"] .btn.secondary:hover{background:#2b333c}
+html[data-theme="dark"] .progress-track,html[data-theme="dark"] .bar-bg{background:#252b32}
+html[data-theme="dark"] .speak-btn{background:#20262d;color:#b9ddff;border-color:#46515d}
+html[data-theme="dark"] .speak-btn:hover{background:#303943}
+html[data-theme="dark"] .theme-toggle .theme-dot{background:#20262d;box-shadow:0 0 0 2px #a9d7ff}
+html[data-theme="dark"] .option.selected{background:#202b35!important;border-color:#8ecbff!important}
+html[data-theme="dark"] .option.correct{background:#123a32!important;border-color:#43b99b!important}
+html[data-theme="dark"] .option.wrong{background:#402630!important;border-color:#d7799c!important}
 
 </style></head>
 <body>
@@ -299,7 +342,7 @@ setTimeout(hideLoader,4200);
 </script>
 
 <a class="whatsapp-issue-btn" href="https://wa.me/94703809347?text=Here%20is%20my%20problem%2Fissues%3A%20" target="_blank" rel="noopener noreferrer" aria-label="Open WhatsApp to ask a question or report an issue" title="Ask a question or report an issue on WhatsApp">
-  <span class="whatsapp-issue-icon" aria-hidden="true">✆</span>
+  <svg class="whatsapp-issue-icon" viewBox="0 0 32 32" width="25" height="25" aria-hidden="true" focusable="false"><path d="M16 3.2a12.1 12.1 0 0 0-10.4 18.3L4 28l6.7-1.7A12.1 12.1 0 1 0 16 3.2Z" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"/><path d="M11.1 9.6c-.4-.9-.8-.9-1.2-.9h-1c-.4 0-.9.2-1.3.7-.5.5-1.7 1.6-1.7 4s1.7 4.7 1.9 5c.2.3 3.3 5.3 8.1 7.2 4 1.6 4.8 1.3 5.7 1.2.9-.1 2.9-1.2 3.3-2.3.4-1.1.4-2 .3-2.2-.1-.2-.5-.4-1-.7s-2.9-1.4-3.4-1.6c-.5-.2-.8-.2-1.1.3-.3.5-1.3 1.6-1.6 1.9-.3.3-.6.4-1.1.1-.5-.2-2.1-.8-4-2.5-1.5-1.3-2.5-2.9-2.8-3.4-.3-.5 0-.8.2-1 .2-.2.5-.6.7-.8.2-.3.3-.5.5-.8.2-.3.1-.6 0-.8-.1-.2-1-2.5-1.4-3.4Z" fill="currentColor" transform="translate(3 0) scale(.82)"/></svg>
   <span>Ask / Report an Issue</span>
 </a>
 
