@@ -66,7 +66,7 @@ render();if(location.hash){const wanted=decodeURIComponent(location.hash.slice(1
   const root=detail||document.querySelector("main")||document.body;
   const clone=root.cloneNode(true);
   clone.querySelectorAll("script,style,button,input,select,textarea,nav,footer,[aria-hidden='true'],#globalReadAloud,.actions,.filter,.toolbar").forEach(el=>el.remove());
-  return (clone.innerText||clone.textContent||"").replace(/\\s+/g," ").trim();
+  return (clone.innerText||clone.textContent||"").replace(/\s+/g," ").trim();
  }
  function stopReading(){
   if("speechSynthesis" in window)window.speechSynthesis.cancel();
