@@ -80,7 +80,6 @@ async function loadAnimalCardImage(animal,img,caption){
     const key=animal.name.toLowerCase().split(" ")[0];
     const best=items.find(x=>x.title.toLowerCase().includes(key))||items[0];
     if(!best)throw Error("No matching image");
-    const source=best.info.descriptionurl||best.info.url;
     img.src=best.info.thumburl;
     img.alt=animal.name+(animal.group==="Dinosaur"?" scientific reconstruction":" photograph");
     img.hidden=false;
@@ -88,9 +87,6 @@ async function loadAnimalCardImage(animal,img,caption){
     const artist=best.info.extmetadata?.Artist?.value?.replace(/<[^>]*>/g,"").trim();
     const placeholder=img.parentElement.querySelector(".card-photo-placeholder");if(placeholder)placeholder.hidden=true;\n    caption.textContent=(animal.group==="Dinosaur"?"Scientific reconstruction · ":"")+
       (artist?artist+" · ":"")+(licence||"See source for licence")+" · Wikimedia Commons";
-    const link=img.closest("a");
-    link.href=source;
-    link.title="Open image source and licence";
   }catch(error){
     img.hidden=true;
     const placeholder=img.parentElement.querySelector(".card-photo-placeholder");if(placeholder)placeholder.textContent="Photo unavailable right now";
@@ -118,6 +114,7 @@ function observeAnimalCardImages(){
   }
 }
 function render(){
+  cardImageQueue.length=0;
   const q=search.value.trim().toLowerCase();
   const list=animals.filter(a=>(group==="All"||a.group===group)&&[a.name,a.sci,a.habitat,a.group].join(" ").toLowerCase().includes(q));
   grid.innerHTML="";
@@ -132,11 +129,6 @@ function render(){
     button.dataset.id=a.id;
     const media=document.createElement("div");
     media.className="card-media";
-    const link=document.createElement("a");
-    link.href="https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search="+encodeURIComponent(a.name);
-    link.target="_blank";
-    link.rel="noopener noreferrer";
-    link.addEventListener("click",event=>event.stopPropagation());
     const img=document.createElement("img");
     img.className="card-photo";
     img.dataset.animalId=a.id;
@@ -145,8 +137,7 @@ function render(){
     const placeholder=document.createElement("span");
     placeholder.className="card-photo-placeholder";
     placeholder.textContent="Loading "+a.name+" photo…";
-    link.append(img,placeholder);
-    media.append(link);
+    media.append(img,placeholder);
     const copy=document.createElement("div");
     copy.className="animal-card-copy";
     const title=document.createElement("h3");
