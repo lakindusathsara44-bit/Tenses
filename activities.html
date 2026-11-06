@@ -103,6 +103,14 @@ html[data-theme="dark"] .speak-btn{background:#153e64;color:#c8e5ff;border-color
 .question>p,.translation-answer,.task-desc{display:flex;align-items:center;flex-wrap:wrap;gap:4px}
 .option-wrap{display:flex;align-items:center;gap:4px;min-width:0}
 .option-wrap .option{flex:1;min-width:0}
+
+/* Floating WhatsApp issue-contact button */
+.whatsapp-issue-btn{position:fixed;right:18px;bottom:18px;z-index:1000;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:11px 17px;border:1px solid #159b55;border-radius:999px;background:#20c76a;color:#fff;text-decoration:none;font:750 .92rem/1.2 inherit;box-shadow:0 8px 24px #063b2440;transition:transform .18s,background .18s,box-shadow .18s}
+.whatsapp-issue-btn:hover{background:#16a85a;transform:translateY(-2px);box-shadow:0 11px 28px #063b2450}
+.whatsapp-issue-btn:focus-visible{outline:3px solid #8ed9ff;outline-offset:3px}
+.whatsapp-issue-icon{display:grid;place-items:center;width:25px;height:25px;border:2px solid currentColor;border-radius:50%;font-size:16px;line-height:1}
+@media(max-width:480px){.whatsapp-issue-btn{right:12px;bottom:12px;min-height:46px;padding:10px 14px;font-size:.86rem}}
+
 </style></head>
 <body>
 <div class="loader-screen" id="loaderScreen" role="status" aria-live="polite" aria-label="Loading English Grammar Activity and Progress Centre">
@@ -289,4 +297,10 @@ setTimeout(hideLoader,4200);
 })();
 
 </script>
+
+<a class="whatsapp-issue-btn" href="https://wa.me/94703809347?text=Here%20is%20my%20problem%2Fissues%3A%20" target="_blank" rel="noopener noreferrer" aria-label="Open WhatsApp to ask a question or report an issue" title="Ask a question or report an issue on WhatsApp">
+  <span class="whatsapp-issue-icon" aria-hidden="true">✆</span>
+  <span>Ask / Report an Issue</span>
+</a>
+
 </body></html>
