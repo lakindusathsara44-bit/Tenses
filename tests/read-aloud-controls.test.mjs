@@ -79,3 +79,13 @@ test("read-aloud helper avoids duplicate buttons and skips passive notes", () =>
   context.attach(note);
   assert.equal(note.children.length, 0);
 });
+
+
+test("both learning pages include the WhatsApp issue-contact button with the requested prefilled message", () => {
+  for (const html of [indexHtml, activitiesHtml]) {
+    assert.match(html, /class="whatsapp-issue-btn"/);
+    assert.match(html, /https:\/\/wa\.me\/94703809347\?text=Here%20is%20my%20problem%2Fissues%3A%20/);
+    assert.match(html, /target="_blank" rel="noopener noreferrer"/);
+    assert.match(html, /Ask \/ Report an Issue/);
+  }
+});
