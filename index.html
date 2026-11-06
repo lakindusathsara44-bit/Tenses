@@ -65,6 +65,14 @@ html[data-theme="dark"] .pill.done{background:#17466f;color:#b9dcff}
 .sentence{display:inline-flex;align-items:center;gap:3px;flex-wrap:wrap}
 html[data-theme="dark"] .speak-btn{background:#153e64;color:#c8e5ff;border-color:#326a98}
 html[data-theme="dark"] .speak-btn:hover{background:#1c5688}
+
+/* Floating WhatsApp issue-contact button */
+.whatsapp-issue-btn{position:fixed;right:18px;bottom:18px;z-index:1000;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:11px 17px;border:1px solid #159b55;border-radius:999px;background:#20c76a;color:#fff;text-decoration:none;font:750 .92rem/1.2 inherit;box-shadow:0 8px 24px #063b2440;transition:transform .18s,background .18s,box-shadow .18s}
+.whatsapp-issue-btn:hover{background:#16a85a;transform:translateY(-2px);box-shadow:0 11px 28px #063b2450}
+.whatsapp-issue-btn:focus-visible{outline:3px solid #8ed9ff;outline-offset:3px}
+.whatsapp-issue-icon{display:grid;place-items:center;width:25px;height:25px;border:2px solid currentColor;border-radius:50%;font-size:16px;line-height:1}
+@media(max-width:480px){.whatsapp-issue-btn{right:12px;bottom:12px;min-height:46px;padding:10px 14px;font-size:.86rem}}
+
 </style></head>
 <body>
 <header><div class="wrap"><div class="stats"><span class="stat">12 Tenses</span><span class="stat">72 Examples</span><span class="stat">Sinhala Meanings</span><span class="stat">Interactive Practice</span></div></div></header>
@@ -223,4 +231,10 @@ showTense(0);
   if(button)button.addEventListener("click",()=>applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
 })();
 
-</script></body></html>
+</script>
+<a class="whatsapp-issue-btn" href="https://wa.me/94703809347?text=Here%20is%20my%20problem%2Fissues%3A%20" target="_blank" rel="noopener noreferrer" aria-label="Open WhatsApp to ask a question or report an issue" title="Ask a question or report an issue on WhatsApp">
+  <span class="whatsapp-issue-icon" aria-hidden="true">✆</span>
+  <span>Ask / Report an Issue</span>
+</a>
+
+</body></html>
