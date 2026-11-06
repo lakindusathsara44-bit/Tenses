@@ -46,7 +46,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);text-a
   const root=detail||document.querySelector("main")||document.body;
   const clone=root.cloneNode(true);
   clone.querySelectorAll("script,style,button,input,select,textarea,nav,footer,[aria-hidden='true'],#globalReadAloud,.actions,.filter,.toolbar").forEach(el=>el.remove());
-  return (clone.innerText||clone.textContent||"").replace(/\\s+/g," ").trim();
+  return (clone.innerText||clone.textContent||"").replace(/\s+/g," ").trim();
  }
  function stopReading(){
   if("speechSynthesis" in window)window.speechSynthesis.cancel();
