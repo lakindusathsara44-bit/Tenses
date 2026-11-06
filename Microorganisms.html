@@ -25,7 +25,15 @@ footer{border-top:1px solid var(--line);padding:24px 0 30px;color:var(--muted);t
 @keyframes twinkle{from{opacity:.25;transform:scale(.7)}to{opacity:1;transform:scale(1.5)}}@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @media(max-width:820px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:540px){.grid{grid-template-columns:1fr}.orb{height:110px}.hero{padding-top:40px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
-</style></head>
+</style><style id="global-read-aloud-style">
+#globalReadAloudControls{position:fixed;right:16px;bottom:16px;z-index:99999;display:flex;gap:8px;align-items:center;padding:8px;background:rgba(8,12,18,.94);border:1px solid #527da3;border-radius:14px;box-shadow:0 8px 28px #0008;backdrop-filter:blur(10px)}
+#globalReadAloudControls button{border:1px solid #6ca8dc;border-radius:9px;background:#14283b;color:#eef7ff;padding:9px 12px;font:600 13px/1.2 system-ui,sans-serif;cursor:pointer}
+#globalReadAloudControls button:hover{background:#204765}
+#globalReadAloudControls button:focus-visible{outline:2px solid #b8e0ff;outline-offset:3px}
+#globalReadAloudStatus{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:480px){#globalReadAloudControls{right:10px;bottom:10px;padding:6px}#globalReadAloudControls button{padding:8px 10px;font-size:12px}}
+</style>
+</head>
 <body>
 <div id="microbe-field" aria-hidden="true"></div>
 <header><div class="wrap top"><div class="brand">APOKOLIPS · MICROSCOPIC WORLD</div><nav><a class="back" href="Apokolips.html">← Apokolips Home</a></nav></div></header>
@@ -41,4 +49,44 @@ const groups=[...new Set(items.map(x=>x.group))].sort();groups.forEach(g=>{const
 function render(){const q=search.value.trim().toLowerCase(),g=filter.value;const found=items.filter(x=>(g==="all"||x.group===g)&&[x.name,x.sci,x.group,x.family,x.habitat,x.description].join(" ").toLowerCase().includes(q));grid.replaceChildren();count.textContent=found.length+" of "+items.length+" microorganism profiles";if(!found.length){const p=document.createElement("p");p.className="empty";p.textContent="No microorganisms match your search.";grid.append(p);return}found.forEach((x,i)=>{const card=document.createElement("button");card.type="button";card.className="card";card.style.animationDelay=Math.min(i*35,350)+"ms";const orb=document.createElement("div");orb.className="orb";const icon=document.createElement("span");icon.className="micro-icon";icon.textContent=x.emoji||"🦠";orb.append(icon);const copy=document.createElement("div");copy.className="copy";const h=document.createElement("h2");h.textContent=x.name;const sci=document.createElement("div");sci.className="sci";sci.textContent=x.sci;const p=document.createElement("p");p.textContent=x.description;const tag=document.createElement("span");tag.className="tag";tag.textContent=x.group;copy.append(h,sci,p,tag);card.append(orb,copy);card.addEventListener("click",()=>{window.location.href="Apo.html?id="+encodeURIComponent(x.id)});grid.append(card)})}
 search.addEventListener("input",render);filter.addEventListener("change",render);render();
 const field=document.getElementById("microbe-field");for(let i=0;i<95;i++){const dot=document.createElement("i");dot.className="particle";dot.style.left=Math.random()*100+"%";dot.style.top=Math.random()*110+"%";dot.style.setProperty("--dx",(Math.random()*100-50)+"px");dot.style.setProperty("--duration",(7+Math.random()*13)+"s");dot.style.setProperty("--delay",(-Math.random()*18)+"s");dot.style.setProperty("--opacity",(0.25+Math.random()*0.65).toFixed(2));field.append(dot)}
-</script></body></html>
+</script><script id="global-read-aloud-script">
+(function(){
+  if(!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
+  const controls=document.createElement("div");
+  controls.id="globalReadAloudControls";
+  controls.setAttribute("role","group");
+  controls.setAttribute("aria-label","Page reading controls");
+  const read=document.createElement("button");
+  read.type="button";read.textContent="🔊 Read page";
+  read.setAttribute("aria-label","Read the visible page aloud");
+  const stop=document.createElement("button");
+  stop.type="button";stop.textContent="■ Stop";
+  stop.setAttribute("aria-label","Stop reading aloud");
+  const status=document.createElement("span");
+  status.id="globalReadAloudStatus";status.setAttribute("aria-live","polite");
+  controls.append(read,stop,status);document.body.append(controls);
+  let activeUtterance=null;
+  function reset(){read.textContent="🔊 Read page";read.disabled=false;activeUtterance=null;status.textContent="";}
+  function stopReading(){window.speechSynthesis.cancel();reset();}
+  read.addEventListener("click",function(){
+    const root=document.querySelector("main")||document.body;
+    const clone=root.cloneNode(true);
+    clone.querySelectorAll("script,style,button,nav,header,footer,input,select,textarea,[aria-hidden='true'],#globalReadAloudControls").forEach(el=>el.remove());
+    const content=(clone.innerText||clone.textContent||"").replace(/\s+/g," ").trim();
+    if(!content){status.textContent="There is no visible page text to read.";return;}
+    window.speechSynthesis.cancel();
+    const utterance=new SpeechSynthesisUtterance(content);
+    utterance.lang="en-US";utterance.rate=0.95;utterance.pitch=1;
+    const voices=window.speechSynthesis.getVoices();
+    const voice=voices.find(v=>/^en-US$/i.test(v.lang))||voices.find(v=>/^en-GB$/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));
+    if(voice)utterance.voice=voice;
+    activeUtterance=utterance;
+    utterance.onend=reset;utterance.onerror=reset;
+    read.textContent="⏸ Reading…";status.textContent="Reading page text.";
+    window.speechSynthesis.speak(utterance);
+  });
+  stop.addEventListener("click",stopReading);
+  window.addEventListener("pagehide",stopReading);
+})();
+</script>
+</body></html>
