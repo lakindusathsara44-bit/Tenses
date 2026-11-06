@@ -3,7 +3,15 @@
 <style>
 :root{color-scheme:dark;--bg:#080d0a;--panel:#101a13;--panel2:#152219;--line:#2a4030;--text:#eff7ef;--muted:#afc0b0;--green:#9be7ad;--green2:#55bd76;--deep:#173b25;--deep2:#102b1a}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -12%,#1b3b27,transparent 46%),var(--bg);color:var(--text);font:16px/1.65 Inter,system-ui,sans-serif}.wrap{width:min(1180px,calc(100% - 32px));margin:auto}header{padding:24px 0;border-bottom:1px solid var(--line)}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.brand,.eyebrow{color:var(--green);font-weight:850;letter-spacing:.13em}.back{color:var(--green);text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:8px 12px}.back:hover{background:var(--deep);border-color:var(--green2)}.hero{padding:35px 0 12px}.hero h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.04;margin:8px 0;letter-spacing:-.04em}.hero p,.plant p,.subtitle{color:var(--muted);max-width:760px}.toolbar{display:flex;gap:10px;margin:20px 0}.search{width:100%;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:11px;padding:13px;font:inherit}.search:focus{outline:2px solid var(--green2);outline-offset:2px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:20px 0 30px}.plant{display:flex;flex-direction:column;text-align:left;padding:0;overflow:hidden;min-width:0;background:linear-gradient(145deg,#17251a,#101812);border:1px solid var(--line);border-radius:16px;color:inherit;cursor:pointer;transition:.22s;animation:rise .35s both}.plant:hover{transform:translateY(-5px);border-color:#5eaa70;box-shadow:0 15px 32px #0008}.card-media{aspect-ratio:16/10;background:#07110b;display:grid;place-items:center;overflow:hidden}.card-photo{width:100%;height:100%;object-fit:cover}.placeholder{color:var(--muted);font-size:.85rem;padding:18px;text-align:center}.copy{padding:14px 16px 17px}.copy h2{font-size:1.12rem;margin:0 0 2px}.copy .sci{font-size:.86rem;color:var(--green);font-style:italic}.copy p{color:var(--muted);font-size:.88rem;margin:7px 0 0}.copy small{display:block;color:#9bd5a9;margin-top:9px}.detail{display:none;margin:22px 0 50px;padding:clamp(16px,3vw,28px);background:var(--panel);border:1px solid var(--line);border-radius:20px;animation:rise .3s}.detail.show{display:block}.detail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}.detail h2{font-size:clamp(1.8rem,4vw,2.6rem);margin:4px 0}.detail .scientific{color:var(--green);font-style:italic;margin:0}.close,.action{border:1px solid var(--line);background:#1a2a1e;color:var(--text);border-radius:10px;padding:9px 13px;cursor:pointer;font:inherit}.close:hover,.action:hover{border-color:var(--green2);background:var(--deep)}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:18px 0}.photo-card{margin:0;padding:8px;background:var(--panel2);border:1px solid var(--line);border-radius:12px}.photo-card img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;background:#07110b}.photo-card figcaption{font-size:.77rem;color:var(--muted);padding:5px 2px}.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}.fact{padding:13px;background:var(--panel2);border:1px solid var(--line);border-radius:12px}.fact b{display:block;color:var(--green);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase}.info h3{color:var(--green);margin:17px 0 3px}.info p{margin:0;color:#dce9dd}.sources a{color:var(--green);margin-right:14px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}.status{color:var(--muted);font-size:.85rem;min-height:24px}.empty{grid-column:1/-1;text-align:center;padding:28px;color:var(--muted)}footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);text-align:center;font-size:.85rem}@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:540px){.grid,.facts{grid-template-columns:1fr}.top{align-items:flex-start}.hero{padding-top:28px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
-</style></head><body>
+</style><style id="global-read-aloud-style">
+#globalReadAloudControls{position:fixed;right:16px;bottom:16px;z-index:99999;display:flex;gap:8px;align-items:center;padding:8px;background:rgba(8,12,18,.94);border:1px solid #527da3;border-radius:14px;box-shadow:0 8px 28px #0008;backdrop-filter:blur(10px)}
+#globalReadAloudControls button{border:1px solid #6ca8dc;border-radius:9px;background:#14283b;color:#eef7ff;padding:9px 12px;font:600 13px/1.2 system-ui,sans-serif;cursor:pointer}
+#globalReadAloudControls button:hover{background:#204765}
+#globalReadAloudControls button:focus-visible{outline:2px solid #b8e0ff;outline-offset:3px}
+#globalReadAloudStatus{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:480px){#globalReadAloudControls{right:10px;bottom:10px;padding:6px}#globalReadAloudControls button{padding:8px 10px;font-size:12px}}
+</style>
+</head><body>
 <header><div class="wrap top"><div class="brand">APOKOLIPS · PLANT DISCOVERY</div><a class="back" href="Apokolips.html">← Back to Apokolips</a><a class="back" href="Animal.html">🐾 Animals</a><a class="back" href="Dinosaurs.html">🦖 Dinosaurs</a></div></header>
 <main class="wrap"><section class="hero"><div class="eyebrow">EXPLORE THE WORLD OF PLANTS</div><h1>Discover Trees.</h1><p>Meet remarkable plant species, explore their evolutionary history, habitats, life cycles and the roles they play in nature. Select a plant to open its profile.</p></section>
 <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search by plant name, family or habitat…" aria-label="Search plants"></div>
@@ -40,4 +48,44 @@ document.getElementById("closeDetail").addEventListener("click",closeProfile);se
 document.getElementById("readAloud").addEventListener("click",()=>{if(!current||!("speechSynthesis"in window))return;window.speechSynthesis.cancel();const text=[current.name,current.sci,current.description,...fields.map(k=>current[k])].join(". ");const utterance=new SpeechSynthesisUtterance(text);utterance.lang="en-US";window.speechSynthesis.speak(utterance);});
 document.getElementById("stopReading").addEventListener("click",()=>{if("speechSynthesis"in window)window.speechSynthesis.cancel();});
 render();if(location.hash){const wanted=decodeURIComponent(location.hash.slice(1));const match=plants.find(p=>p.id===wanted);if(match)openProfile(match);}
-</script></body></html>
+</script><script id="global-read-aloud-script">
+(function(){
+  if(!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
+  const controls=document.createElement("div");
+  controls.id="globalReadAloudControls";
+  controls.setAttribute("role","group");
+  controls.setAttribute("aria-label","Page reading controls");
+  const read=document.createElement("button");
+  read.type="button";read.textContent="🔊 Read page";
+  read.setAttribute("aria-label","Read the visible page aloud");
+  const stop=document.createElement("button");
+  stop.type="button";stop.textContent="■ Stop";
+  stop.setAttribute("aria-label","Stop reading aloud");
+  const status=document.createElement("span");
+  status.id="globalReadAloudStatus";status.setAttribute("aria-live","polite");
+  controls.append(read,stop,status);document.body.append(controls);
+  let activeUtterance=null;
+  function reset(){read.textContent="🔊 Read page";read.disabled=false;activeUtterance=null;status.textContent="";}
+  function stopReading(){window.speechSynthesis.cancel();reset();}
+  read.addEventListener("click",function(){
+    const root=document.querySelector("main")||document.body;
+    const clone=root.cloneNode(true);
+    clone.querySelectorAll("script,style,button,nav,header,footer,input,select,textarea,[aria-hidden='true'],#globalReadAloudControls").forEach(el=>el.remove());
+    const content=(clone.innerText||clone.textContent||"").replace(/\s+/g," ").trim();
+    if(!content){status.textContent="There is no visible page text to read.";return;}
+    window.speechSynthesis.cancel();
+    const utterance=new SpeechSynthesisUtterance(content);
+    utterance.lang="en-US";utterance.rate=0.95;utterance.pitch=1;
+    const voices=window.speechSynthesis.getVoices();
+    const voice=voices.find(v=>/^en-US$/i.test(v.lang))||voices.find(v=>/^en-GB$/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));
+    if(voice)utterance.voice=voice;
+    activeUtterance=utterance;
+    utterance.onend=reset;utterance.onerror=reset;
+    read.textContent="⏸ Reading…";status.textContent="Reading page text.";
+    window.speechSynthesis.speak(utterance);
+  });
+  stop.addEventListener("click",stopReading);
+  window.addEventListener("pagehide",stopReading);
+})();
+</script>
+</body></html>
