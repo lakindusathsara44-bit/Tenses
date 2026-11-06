@@ -95,6 +95,14 @@ html[data-theme="dark"] .translation-item p{color:#e4f2ff}
 html[data-theme="dark"] .translation-item textarea{background:#102f50;color:#e4f2ff;border-color:#28577f}
 html[data-theme="dark"] .translation-answer{background:#123b63;color:#d8ecff}
 @media(max-width:520px){.translation-panel{padding:11px}.translation-item{padding:10px}.translation-actions button{flex:1 1 100%}}
+
+/* Compact read-aloud controls */
+.speak-btn{display:inline-grid;place-items:center;flex:0 0 27px;width:27px;height:27px;min-height:27px;margin-left:6px;padding:0;border:1px solid #b8d8f5;border-radius:50%;background:#eef7ff;color:#15569a;font-size:13px;line-height:1;vertical-align:middle;cursor:pointer}
+.speak-btn:hover{background:#dceeff}
+html[data-theme="dark"] .speak-btn{background:#153e64;color:#c8e5ff;border-color:#326a98}
+.question>p,.translation-answer,.task-desc{display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.option-wrap{display:flex;align-items:center;gap:4px;min-width:0}
+.option-wrap .option{flex:1;min-width:0}
 </style></head>
 <body>
 <div class="loader-screen" id="loaderScreen" role="status" aria-live="polite" aria-label="Loading English Grammar Activity and Progress Centre">
@@ -176,6 +184,36 @@ return [
 {skill:"Grammar understanding",prompt:"Which description best explains "+t.name+"?",answer:t.use,opts:shuffle([t.use,...shuffle(DATA.filter(x=>x.use!==t.use).map(x=>x.use)).slice(0,3)])}
 ]}
 
+
+function createSpeakButton(text){
+ const button=document.createElement("button");
+ button.type="button";button.className="speak-btn";button.textContent="🔊";
+ button.title="Read this English sentence aloud";button.setAttribute("aria-label","Read aloud: "+text);
+ button.addEventListener("click",()=>{
+  if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){
+   button.title="Text-to-speech is not supported in this browser";return;
+  }
+  window.speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(text);
+  utterance.lang="en-US";utterance.rate=0.9;utterance.pitch=1;
+  const voices=window.speechSynthesis.getVoices();
+  const voice=voices.find(v=>/^en-US$/i.test(v.lang))||voices.find(v=>/^en-GB$/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));
+  if(voice)utterance.voice=voice;
+  window.speechSynthesis.speak(utterance);
+ });
+ return button;
+}
+function addReadAloud(element){
+ if(!element||element.querySelector(":scope > .speak-btn"))return;
+ const sentence=element.textContent.trim();
+ if(!sentence)return;
+ element.append(createSpeakButton(sentence));
+}
+function isSpeakableSentence(text){
+ const value=String(text||"").trim();
+ return value.split(/\\s+/).length>=3&&/[.!?]$/.test(value);
+}
+
 function renderTranslations(t){
  const panel=document.getElementById("translationPanel"),root=document.getElementById("translationList");
  if(!panel||!root)return;
@@ -188,7 +226,7 @@ function renderTranslations(t){
   const actions=document.createElement("div");actions.className="translation-actions";
   const reveal=document.createElement("button");reveal.type="button";reveal.textContent="Show suggested translation";
   const answer=document.createElement("div");answer.className="translation-answer";answer.hidden=true;
-  answer.textContent="Suggested translation: "+item[1];
+  answer.textContent="Suggested translation: "+item[1];addReadAloud(answer);
   reveal.addEventListener("click",()=>{answer.hidden=!answer.hidden;reveal.textContent=answer.hidden?"Show suggested translation":"Hide suggested translation"});
   const clear=document.createElement("button");clear.type="button";clear.textContent="Clear answer";clear.addEventListener("click",()=>{input.value="";input.focus()});
   actions.append(reveal,clear);card.append(prompt,input,actions,answer);root.append(card);
@@ -196,7 +234,7 @@ function renderTranslations(t){
  panel.hidden=false;
 }
 function renderList(){const el=document.getElementById("taskList");el.innerHTML="";DATA.forEach((t,i)=>{const b=document.createElement("button");b.className="task-link"+(selected===i?" active":"");const r=saved[i];b.innerHTML='<span><b>'+(i+1)+'. '+t.name+'</b></span><span class="pill '+(r?"done":"")+'">'+(r?r.score+"%":"Start")+'</span>';b.onclick=()=>openTask(i);el.append(b)})}
-function openTask(i){selected=i;answers={};submitted=false;const t=DATA[i];document.getElementById("taskLabel").textContent="Activity "+(i+1)+" of 12";document.getElementById("taskTitle").textContent=t.name;document.getElementById("taskDesc").textContent=t.use;renderTranslations(t);document.getElementById("taskScore").textContent=saved[i]?"Previous score: "+saved[i].score+"%":"Not submitted";document.getElementById("emptyState").hidden=true;document.getElementById("actions").hidden=false;document.getElementById("result").innerHTML="";const root=document.getElementById("questions");root.innerHTML="";makeQuestions(t,i).forEach((q,j)=>{const card=document.createElement("article");card.className="question";card.dataset.answer=q.answer;card.innerHTML='<div class="qtop"><span class="qtitle">Question '+(j+1)+' · '+q.skill+'</span><span class="pill">1 mark</span></div><p></p><div class="options"></div>';card.querySelector("p").textContent=q.prompt;const opts=card.querySelector(".options");q.opts.forEach(opt=>{const b=document.createElement("button");b.className="option";b.textContent=opt;b.onclick=()=>{if(submitted)return;answers[j]=opt;[...opts.children].forEach(x=>x.classList.toggle("selected",x===b))};opts.append(b)});root.append(card)});renderList();document.getElementById("activityCard").scrollIntoView({behavior:"smooth",block:"start"})}
+function openTask(i){selected=i;answers={};submitted=false;const t=DATA[i];document.getElementById("taskLabel").textContent="Activity "+(i+1)+" of 12";document.getElementById("taskTitle").textContent=t.name;document.getElementById("taskDesc").textContent=t.use;addReadAloud(document.getElementById("taskDesc"));renderTranslations(t);document.getElementById("taskScore").textContent=saved[i]?"Previous score: "+saved[i].score+"%":"Not submitted";document.getElementById("emptyState").hidden=true;document.getElementById("actions").hidden=false;document.getElementById("result").innerHTML="";const root=document.getElementById("questions");root.innerHTML="";makeQuestions(t,i).forEach((q,j)=>{const card=document.createElement("article");card.className="question";card.dataset.answer=q.answer;card.innerHTML='<div class="qtop"><span class="qtitle">Question '+(j+1)+' · '+q.skill+'</span><span class="pill">1 mark</span></div><p></p><div class="options"></div>';card.querySelector("p").textContent=q.prompt;addReadAloud(card.querySelector("p"));const opts=card.querySelector(".options");q.opts.forEach(opt=>{const wrap=document.createElement("div");wrap.className="option-wrap";const b=document.createElement("button");b.className="option";b.textContent=opt;b.onclick=()=>{if(submitted)return;answers[j]=opt;[...opts.querySelectorAll(".option")].forEach(x=>x.classList.toggle("selected",x===b))};wrap.append(b);if(isSpeakableSentence(opt))wrap.append(createSpeakButton(opt));opts.append(wrap)});root.append(card)});renderList();document.getElementById("activityCard").scrollIntoView({behavior:"smooth",block:"start"})}
 function submit(){if(Object.keys(answers).length!==10){document.getElementById("result").innerHTML='<div class="result"><b>Complete all ten questions first.</b><p class="hint">Answered '+Object.keys(answers).length+' of 10.</p></div>';return}const t=DATA[selected],qs=makeQuestions(t,selected);/* stable question set is attached below instead */const cards=[...document.querySelectorAll(".question")];let score=0,skills={};cards.forEach((card,j)=>{const title=card.querySelector(".qtitle").textContent.split(" · ")[1],correct=card.dataset.answer;const chosen=answers[j];const ok=chosen===correct;if(ok)score++;skills[title]=ok?100:0;[...card.querySelectorAll(".option")].forEach(b=>{if(b.textContent===correct)b.classList.add("correct");if(b.textContent===chosen&&!ok)b.classList.add("wrong");b.disabled=true})});submitted=true;const pct=Math.round(score/10*100),grade=pct>=90?"A":pct>=80?"B":pct>=70?"C":pct>=50?"S":"W";saved[selected]={score:pct,correct:score,skills,grade,at:new Date().toISOString()};persist();document.getElementById("taskScore").textContent="Score: "+pct+"% · Grade "+grade;const desc=pct>=90?"Excellent mastery — keep it up!":pct>=70?"Good progress. Review the missed concepts and try again.":pct>=50?"Developing understanding. Revisit the lesson and practise again.":"Needs improvement. Study the structures and repeat this activity.";document.getElementById("result").innerHTML='<div class="result"><h3>Activity submitted · '+pct+' / 100 · Grade '+grade+'</h3><p>'+desc+'</p><p><b>'+score+' of 10</b> answers correct. Your progress has been updated automatically.</p><div class="rubric"><div><b>90–100 · A</b>Excellent</div><div><b>80–89 · B</b>Very good</div><div><b>70–79 · C</b>Good</div><div><b>50–69 · S</b>Satisfactory<br>Below 50 · W</div></div><p class="hint">Marking schema: 10 questions × 1 mark = 10 raw marks; converted to percentage. Each question contributes equally (10%). The latest submission replaces the previous score for this activity.</p></div>';updateDashboard();renderList()}
 function updateDashboard(){
 const vals=Object.values(saved),count=vals.length,avg=count?Math.round(vals.reduce((s,x)=>s+x.score,0)/count):0;
