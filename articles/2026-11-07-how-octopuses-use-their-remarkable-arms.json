@@ -1,0 +1,50 @@
+{
+  "title": "How Octopuses Use Their Remarkable Arms",
+  "category": "Animals",
+  "summary": "An octopus can explore, grip, taste and manipulate objects with eight flexible arms. Its unusual nervous system helps explain how these intelligent animals interact with the world.",
+  "introduction": "Octopuses are marine molluscs belonging to the group called cephalopods. Unlike animals with rigid skeletons, an octopus has a soft body and eight highly flexible arms lined with suckers. These arms are not simply tools for swimming: they help the animal investigate its surroundings, capture prey and move across the seabed.",
+  "sections": [
+    {
+      "heading": "Eight arms built for exploration",
+      "body": "Each arm contains many suckers that can attach to surfaces and handle objects. The suckers are sensitive to touch and chemical cues, allowing an octopus to gather information while exploring. Because the arms have no bones, they can bend, shorten, lengthen and reach into narrow spaces. This flexibility is useful when searching among rocks, shells and coral."
+    },
+    {
+      "heading": "A nervous system unlike ours",
+      "body": "A large part of an octopus's nervous system is distributed through its arms. Each arm contains neural circuits that help coordinate local movements and responses. The brain still plays an important role, but the arms can perform some complex actions without every movement being directed individually from the centre. Scientists study this arrangement to understand how intelligence and movement can be organised in different ways."
+    },
+    {
+      "heading": "Suckers do more than hold on",
+      "body": "Octopus suckers create a seal against many surfaces, allowing them to grip objects underwater. They also contain sensory receptors. Research indicates that octopuses can use chemical sensing through their suckers, combining information about touch and nearby substances. This helps them examine objects and locate food while their arms move over the environment."
+    },
+    {
+      "heading": "Camouflage and problem-solving",
+      "body": "Many octopuses can rapidly change the colour and texture of their skin. Specialised skin cells and muscles help produce patterns that can make an octopus harder to notice or help it communicate. Some species have also been observed opening containers, navigating mazes or using objects as shelter. These behaviours vary among species and individuals, and researchers continue to investigate how octopuses learn."
+    },
+    {
+      "heading": "Life in the ocean",
+      "body": "Octopuses live in a wide range of marine habitats, from shallow coastal waters to the deep sea. Many are solitary and spend much of their time in dens or sheltered places. Their lives are often relatively short compared with those of many other large animals. After reproduction, many species show a dramatic decline in condition, and females of numerous species guard their eggs until they hatch."
+    }
+  ],
+  "facts": [
+    "An octopus has three hearts: two pump blood through the gills, while one pumps it to the rest of the body.",
+    "Octopus blood is blue because it uses the copper-containing protein haemocyanin to carry oxygen.",
+    "An octopus has no bones, so it can squeeze through openings that are large enough for its hard beak."
+  ],
+  "conclusion": "Octopuses show that complex behaviour does not require a backbone or limbs like ours. Their flexible arms, sensitive suckers, unusual nervous system and remarkable camouflage make them fascinating examples of how marine animals have evolved to solve the challenges of life underwater.",
+  "further_reading": [
+    {
+      "title": "Smithsonian Ocean – Octopuses",
+      "url": "https://ocean.si.edu/ocean-life/invertebrates/octopuses"
+    },
+    {
+      "title": "Natural History Museum – Octopuses",
+      "url": "https://www.nhm.ac.uk/discover/octopuses.html"
+    },
+    {
+      "title": "Animal Diversity Web – Octopoda",
+      "url": "https://animaldiversity.org/accounts/Octopoda/"
+    }
+  ],
+  "date": "2026-11-07",
+  "model": "GPT-6 (editorial demonstration)"
+}
