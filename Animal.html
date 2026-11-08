@@ -18,6 +18,8 @@
 .elephant-notice-footer button{border:1px solid var(--line);background:#202b36;color:var(--text);padding:9px 15px;border-radius:10px;cursor:pointer}
 @keyframes noticeFade{from{opacity:0}to{opacity:1}}@keyframes noticeRise{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.elephant-notice-backdrop,.elephant-notice{animation:none}}
+/* Ensure the native hidden state wins over the backdrop's display:grid. */
+.elephant-notice-backdrop[hidden]{display:none!important}
 </style></head><body><header><div class="wrap top"><div class="brand">APOKOLIPS · ANIMAL DATA PACK</div><a class="back" href="Apokolips.html">← Back to Apokolips</a><a class="back" href="index.html">← Back to English Tenses</a></div></header><div class="elephant-notice-backdrop" id="elephantNotice" role="presentation">
   <section class="elephant-notice" role="dialog" aria-modal="true" aria-labelledby="elephantNoticeTitle" aria-describedby="elephantNoticeDescription">
     <button class="elephant-notice-close" id="closeElephantNotice" type="button" aria-label="Close message">×</button>
